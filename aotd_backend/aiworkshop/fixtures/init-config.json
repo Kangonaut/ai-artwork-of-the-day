@@ -1,0 +1,30 @@
+[
+  {
+    "model": "aiworkshop.BasicConfig",
+    "fields": {
+      "key": "OPENAI_API_KEY",
+      "value": null
+    }
+  },
+  {
+    "model": "aiworkshop.BasicConfig",
+    "fields": {
+      "key": "PUSHOVER_APPLICATION_API_KEY",
+      "value": null
+    }
+  },
+  {
+    "model": "aiworkshop.BasicConfig",
+    "fields": {
+      "key": "PUSHOVER_USER_KEY",
+      "value": null
+    }
+  },
+  {
+    "model": "aiworkshop.BasicConfig",
+    "fields": {
+      "key": "AOTD_ISSUE_TIME",
+      "value": null
+    }
+  }
+]
