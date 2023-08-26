@@ -26,5 +26,12 @@
       "key": "AOTD_ISSUE_TIME",
       "value": null
     }
+  },{
+    "model": "aiworkshop.BasicConfig",
+    "fields": {
+      "key": "LLM_PROMPT",
+      "value": "write a prompt (only the prompt) for an image generation AI according to the following JSON document: JSON_DOC; the prompt should be short; prompt: "
+    }
   }
+
 ]
