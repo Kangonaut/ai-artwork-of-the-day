@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'core.apps.CoreConfig',
 
-
     # REST
     'rest_framework',
     'debug_toolbar',
@@ -163,3 +162,7 @@ LOGGING = {
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
+
+# CELERY
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'

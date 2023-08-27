@@ -5,7 +5,7 @@ from rest_framework import viewsets, mixins
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from . import models, serializers, signals
+from . import models, serializers, signals, tasks
 import openai
 import json
 
@@ -26,7 +26,8 @@ def hello_world(request):
 
 @api_view(['GET'])
 def issue_artwork(request):
-    signals.artwork_request.send(sender=None)
+
+    tasks.generate_artwork.delay()
 
     return Response({
         'status': 'request submitted successfully',
