@@ -11,8 +11,9 @@ class _ImageAi:
             prompt=prompt,
             n=1,
             size=self.size,
+            response_format='b64_json'
         )
-        return image_response['data'][0]['url']
+        return image_response['data'][0]['b64_json']
 
 
 class _ChatAi:

@@ -1,3 +1,1 @@
-from .ai import image_ai, chat_ai
-
-__all__ = ('image_ai', 'chat_ai',)
+default_app_config = 'aiworkshop.apps.AiworkshopConfig'

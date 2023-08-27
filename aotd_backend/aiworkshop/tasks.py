@@ -1,6 +1,11 @@
 from celery import shared_task
+from django.core.files.base import ContentFile
+
 import openai
 import json
+import base64
+from datetime import datetime
+
 from . import models, ai
 
 
@@ -28,8 +33,11 @@ def generate_artwork():
     )
 
     # prompt image AI
-    image_url = ai.image_ai.generate(prompt=image_prompt)
+    base64_image = ai.image_ai.generate(prompt=image_prompt)
+    image = base64.b64decode(base64_image)
+    timestamp: str = datetime.now().isoformat()
+    image_file = ContentFile(content=image, name=f'{timestamp}.png')
 
     # save artwork
-    artwork = models.Artwork(data=data, image_url=image_url, image_prompt=image_prompt)
+    artwork = models.Artwork(data=data, image=image_file, image_prompt=image_prompt)
     artwork.save()
