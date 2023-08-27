@@ -1,25 +1,25 @@
 import openai
 import json
 
+
 class _ImageAi:
-    pass
+    def __init__(self, size: str):
+        self.size = size
+
+    def generate(self, prompt: str) -> str:
+        image_response = openai.Image.create(
+            prompt=prompt,
+            n=1,
+            size=self.size,
+        )
+        return image_response['data'][0]['url']
 
 
 class _ChatAi:
     def __init__(self, system_prompt: str):
         self.system_prompt = system_prompt
 
-    def prompt(self, prompt: str) -> str:
-        data: dict[str, any] = {
-            'weather': 'cloudy with a little sun',
-            'temperature': 'hot',
-            'scenery': 'mountains',
-            'animal': 'elephant',
-            'style': 'hyper-realistic'
-        }
-
-        json_doc: str = json.dumps(data)
-
+    def generate(self, prompt: str) -> str:
         response = openai.ChatCompletion.create(
             model='gpt-3.5-turbo',
             n=1,
@@ -27,13 +27,15 @@ class _ChatAi:
             messages=[
                 {'role': 'system', 'content': self.system_prompt},
                 {'role': 'user',
-                 'content': f'write a prompt (only the prompt) for DALL-E according to the following JSON document: {json_doc}; the prompt should be short; prompt: '},
+                 'content': prompt},
             ]
         )
         return response['choices'][0]['message']['content']
 
 
-image_ai = _ImageAi()
+image_ai = _ImageAi(
+    size="256x256",
+)
 chat_ai = _ChatAi(
-    system_prompt='You are a helpful assistant.'
+    system_prompt='You are a helpful assistant.',
 )

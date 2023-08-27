@@ -6,8 +6,8 @@ from . import models, ai
 
 @shared_task()
 def generate_artwork():
-    openai_api_key: str = models.BasicConfig.objects.get(pk='OPENAI_API_KEY').value
-    openai.api_key = openai_api_key
+    # load OpenAI API key
+    openai.api_key = models.BasicConfig.objects.get(pk='OPENAI_API_KEY').value
 
     data: dict[str, any] = {
         'weather': 'cloudy with a little sun',
@@ -17,16 +17,18 @@ def generate_artwork():
         'style': 'hyper-realistic'
     }
 
-    json_doc: str = json.dumps(data)
+    # build prompt
+    json_data: str = json.dumps(data)
+    chat_prompt_template: str = models.BasicConfig.objects.get(key='AOTD_CHAT_PROMPT_TEMPLATE').value
+    chat_prompt: str = chat_prompt_template.replace('<JSON-DATA>', json_data)
 
-    image_prompt = ai.chat_ai.prompt('')
-
-    image_response = openai.Image.create(
-        prompt=image_prompt,
-        n=1,
-        size="256x256"
+    # prompt chat AI
+    image_prompt = ai.chat_ai.generate(
+        prompt=chat_prompt
     )
-    image_url: str = image_response['data'][0]['url']
+
+    # prompt image AI
+    image_url = ai.image_ai.generate(prompt=image_prompt)
 
     # save artwork
     artwork = models.Artwork(data=data, image_url=image_url, image_prompt=image_prompt)
