@@ -39,7 +39,7 @@ class UserSettings(models.Model):
 
 
 class PushoverSettings(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,
         primary_key=True,
