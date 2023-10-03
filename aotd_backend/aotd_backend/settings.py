@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import dotenv
+import os
+
+# LOAD DOTENV
+dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,13 +46,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'core.apps.CoreConfig',
 
-    # REST
+    # THIRD-PARTY
     'rest_framework',
     'debug_toolbar',
     'corsheaders',
+    'djoser',
+    'rest_framework_simplejwt',
 
     # CUSTOM
-    'aiworkshop'
+    'workshop',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -140,9 +148,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # REST
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # )
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 # LOGGING
@@ -166,3 +174,14 @@ CORS_ALLOW_ALL_ORIGINS = True
 # CELERY
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+# CUSTOM USER MODEL
+AUTH_USER_MODEL = 'users.CustomUser'
+
+# DJOSER
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.CustomUserCreateSerializer'
+    }
+}

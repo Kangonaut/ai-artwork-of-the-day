@@ -5,6 +5,7 @@ import openai
 import json
 import base64
 from datetime import datetime
+import os
 
 from . import models, ai
 
@@ -12,7 +13,7 @@ from . import models, ai
 @shared_task()
 def generate_artwork():
     # load OpenAI API key
-    openai.api_key = models.BasicConfig.objects.get(pk='OPENAI_API_KEY').value
+    openai.api_key = os.getenv('OPENAI_API_KEY')
 
     data: dict[str, any] = {
         'weather': 'cloudy with a little sun',
@@ -24,7 +25,7 @@ def generate_artwork():
 
     # build prompt
     json_data: str = json.dumps(data)
-    chat_prompt_template: str = models.BasicConfig.objects.get(key='AOTD_CHAT_PROMPT_TEMPLATE').value
+    chat_prompt_template: str = os.getenv('AOTD_CHAT_PROMPT_TEMPLATE')
     chat_prompt: str = chat_prompt_template.replace('<JSON-DATA>', json_data)
 
     # prompt chat AI

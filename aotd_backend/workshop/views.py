@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from . import models, serializers, signals, tasks
 import openai
 import json
+import os
 
 
 class ConfigManager:
@@ -26,19 +27,8 @@ def hello_world(request):
 
 @api_view(['GET'])
 def issue_artwork(request):
-
     tasks.generate_artwork.delay()
 
     return Response({
         'status': 'request submitted successfully',
     })
-
-
-class BasicConfigView(
-    viewsets.GenericViewSet,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.ListModelMixin,
-):
-    queryset = models.BasicConfig.objects.all()
-    serializer_class = serializers.BasicConfigSerializer

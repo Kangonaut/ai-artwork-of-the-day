@@ -3,7 +3,6 @@ from . import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register('basic-config', views.BasicConfigView)
 
 urlpatterns = [
     path('hello-world/', views.hello_world),
