@@ -1,6 +1,6 @@
 from django.apps import AppConfig
-import dotenv
 import os
+import openai
 
 
 class WorkshopConfig(AppConfig):
@@ -8,4 +8,5 @@ class WorkshopConfig(AppConfig):
     name = 'workshop'
 
     def ready(self):
-        pass
+        # load OpenAI API key
+        openai.api_key = os.getenv('OPENAI_API_KEY')

@@ -19,9 +19,6 @@ def generate_artwork(user_id: int):
     user = models.CustomUser.objects.get(pk=user_id)
     logger.info(f'generating artwork for {user.username}')
 
-    # load OpenAI API key
-    openai.api_key = os.getenv('OPENAI_API_KEY')
-
     data: dict[str, any] = {
         'weather': 'cloudy with a little sun',
         'temperature': 'hot',
