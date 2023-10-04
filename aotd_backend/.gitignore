@@ -258,3 +258,6 @@ redis/
 
 # Uploads
 uploads/
+
+# Logs
+log/

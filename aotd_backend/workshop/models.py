@@ -29,10 +29,6 @@ class UserSettings(models.Model):
         on_delete=models.CASCADE,
         primary_key=True
     )
-    # pushover_user_token = models.CharField(
-    #     max_length=30,
-    #     null=True
-    # )
     issue_time = models.TimeField(
         null=False
     )

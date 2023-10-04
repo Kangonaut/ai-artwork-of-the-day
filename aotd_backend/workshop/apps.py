@@ -8,4 +8,4 @@ class WorkshopConfig(AppConfig):
     name = 'workshop'
 
     def ready(self):
-        import workshop.signals.handlers  # noqa
+        pass

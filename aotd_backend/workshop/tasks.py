@@ -6,12 +6,19 @@ import json
 import base64
 from datetime import datetime
 import os
+import logging
 
-from . import models, ai
+from . import models, ai, delivery_services
+
+logger = logging.getLogger(__name__)
 
 
 @shared_task()
-def generate_artwork():
+def generate_artwork(user_id: int):
+    # retrieve user
+    user = models.CustomUser.objects.get(pk=user_id)
+    logger.info(f'generating artwork for {user.username}')
+
     # load OpenAI API key
     openai.api_key = os.getenv('OPENAI_API_KEY')
 
@@ -40,5 +47,15 @@ def generate_artwork():
     image_file = ContentFile(content=image, name=f'{timestamp}.png')
 
     # save artwork
-    artwork = models.Artwork(data=data, image=image_file, image_prompt=image_prompt)
+    artwork = models.Artwork(
+        user=user,
+        data=data,
+        image=image_file,
+        image_prompt=image_prompt
+    )
     artwork.save()
+    logger.info(f'successfully saved artwork')
+
+    # trigger delivery services
+    logger.info(f'requesting artwork delivery')
+    delivery_services.DeliveryManager.deliver(artwork)

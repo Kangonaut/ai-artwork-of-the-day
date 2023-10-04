@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import dotenv
 import os
+from datetime import timedelta
 
 # LOAD DOTENV
 dotenv.load_dotenv()
@@ -161,9 +162,14 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
         },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'log/debug.log',
+        },
     },
     'root': {
-        'handlers': ['console'],
+        'handlers': ['console', 'file'],
         'level': 'DEBUG',
     },
 }
@@ -179,9 +185,15 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # DJOSER
-
 DJOSER = {
     'SERIALIZERS': {
         'user_create': 'users.serializers.CustomUserCreateSerializer'
     }
+}
+
+# SIMPLE JWT
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    # TODO: change access-token lifetime to a reasonable duration
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 }
