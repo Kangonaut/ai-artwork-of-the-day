@@ -158,19 +158,36 @@ REST_FRAMEWORK = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '{asctime} - {levelname} - {name}: {message}',
+            'style': '{',
+        }
+    },
     'handlers': {
-        'console': {
+        'console_handler': {
             'class': 'logging.StreamHandler',
+            'formatter': 'standard',
         },
-        'file': {
-            'level': 'DEBUG',
+        'info_file_handler': {
             'class': 'logging.FileHandler',
-            'filename': 'log/debug.log',
+            'level': 'INFO',
+            'filename': 'log/info.log',
+            'formatter': 'standard',
+        },
+        'error_file_handler': {
+            'class': 'logging.FileHandler',
+            'level': 'ERROR',
+            'filename': 'log/error.log',
+            'formatter': 'standard',
+
         },
     },
-    'root': {
-        'handlers': ['console', 'file'],
-        'level': 'DEBUG',
+    'loggers': {
+        'root': {
+            'handlers': ['console_handler', 'info_file_handler', 'error_file_handler'],
+            'level': 'DEBUG',
+        },
     },
 }
 
