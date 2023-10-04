@@ -57,6 +57,8 @@ class _Pushover(DeliveryService):
                 'successful' if response.status_code == 200
                 else f'Pushover request failed: {response.text}'
             )
+            print('successful' if response.status_code == 200
+                  else f'Pushover request failed: {response.text}')
         else:
             _Pushover.__LOGGER.info('not configured => abort')
 
