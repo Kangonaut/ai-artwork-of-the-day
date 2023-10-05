@@ -197,6 +197,12 @@ CORS_ALLOW_ALL_ORIGINS = True
 # CELERY
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_BEAT_SCHEDULE = {
+    'check_due_artworks': {
+        'task': 'workshop.tasks.check_due_artworks',
+        'schedule': 60.0,  # runs every 60 seconds
+    },
+}
 
 # CUSTOM USER MODEL
 AUTH_USER_MODEL = 'users.CustomUser'

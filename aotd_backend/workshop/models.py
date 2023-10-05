@@ -44,3 +44,17 @@ class PushoverSettings(models.Model):
         max_length=30,
         null=False,
     )
+
+
+class CeleryTaskRun(models.Model):
+    task = models.CharField(
+        max_length=255,
+        null=False,
+    )
+    run_at = models.DateTimeField(
+        auto_now_add=True,
+        null=False,
+    )
+
+    class Meta:
+        unique_together = ['task', 'run_at']
