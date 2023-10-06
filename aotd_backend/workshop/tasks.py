@@ -33,15 +33,15 @@ def check_due_artworks(self):
     # range_start = last run or start of day
     time_range_start: datetime = last_run.run_at if last_run else datetime.combine(datetime.now(), time.min)
     time_range_end: datetime = current_run.run_at
-    users = models.UserSettings.objects.filter(
+    users_settings = models.UserSettings.objects.filter(
         issue_time__gt=time_range_start,  # exclusive
         issue_time__lte=time_range_end,  # inclusive
     )
 
     # trigger artwork generation for those users
-    logger.info(f'{users.count()} due artworks found')
-    for user in users:
-        generate_artwork.delay(user_id=user.id)
+    logger.info(f'{users_settings.count()} due artworks found')
+    for user_settings in users_settings:
+        generate_artwork.delay(user_id=user_settings.user.id)
 
 
 @shared_task(ignore_result=True)
