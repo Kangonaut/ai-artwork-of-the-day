@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import CustomUser
+from datetime import time
 
 
 class Artwork(models.Model):
@@ -30,7 +31,10 @@ class UserSettings(models.Model):
         primary_key=True
     )
     issue_time = models.TimeField(
-        null=False
+        null=False,
+        default=time(
+            hour=6,  # 06:00
+        )
     )
 
 

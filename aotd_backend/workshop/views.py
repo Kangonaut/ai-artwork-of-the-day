@@ -1,7 +1,8 @@
 from rest_framework import viewsets, mixins
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import NotFound
 from rest_framework.views import APIView
 from . import models, serializers, tasks
 
@@ -21,5 +22,31 @@ def issue_artwork(request):
         'status': 'request submitted successfully',
     })
 
+
 # TODO: API endpoints for user-settings
+class UserSettingsViewSet(
+    viewsets.GenericViewSet,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+):
+    permission_classes = [IsAuthenticated]
+    queryset = models.UserSettings.objects.all()
+    serializer_class = serializers.UserSettingsSerializer
+
+    @action(detail=False, methods=['GET', 'POST', 'PUT'])  # endpoint: 'user-settings/me'
+    def me(self, request):
+        user: models.CustomUser = request.user
+        user_settings, created = models.UserSettings.objects.get_or_create(user=user)
+
+        if request.method == 'GET':
+            serializer = serializers.UserSettingsSerializer(user_settings)
+            return Response(serializer.data)
+
+        elif request.method == 'POST' or request.method == 'PUT':
+            serializer = serializers.UserSettingsSerializer(user_settings, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+
 # TODO: API endpoints for pushover-settings
