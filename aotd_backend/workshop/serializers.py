@@ -6,4 +6,9 @@ class UserSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserSettings
         fields = ['issue_time']
-        read_only_fields = []
+
+
+class PushoverSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.PushoverSettings
+        fields = ['user_key']
