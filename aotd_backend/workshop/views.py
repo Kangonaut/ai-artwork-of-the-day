@@ -1,3 +1,7 @@
+import abc
+
+import django.db.models
+import rest_framework.serializers
 from rest_framework import viewsets, mixins, status, exceptions
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -54,42 +58,49 @@ class UserSettingsViewSet(viewsets.GenericViewSet):
             return Response(serializer.data)
 
 
-class PushoverSettingsViewSet(viewsets.GenericViewSet):
-    queryset = models.PushoverSettings.objects.all()
-    serializer_class = serializers.PushoverSettingsSerializer
+class _DeliveryServiceSettingsViewSet(viewsets.GenericViewSet):
+    settings_model: django.db.models.Model.__class__ = None
+    serializer_class: rest_framework.serializers.ModelSerializer.__class__ = None
+    queryset: django.db.models.QuerySet = None
     permission_classes = [IsAuthenticated]
 
     @action(detail=False, methods=['GET', 'POST', 'PUT', 'DELETE'])
     def me(self, request: Request):
         user: models.CustomUser = request.user
         try:
-            pushover_settings = models.PushoverSettings.objects.get(user=user)
-        except models.PushoverSettings.DoesNotExist:
-            pushover_settings = None
+            settings = self.settings_model.objects.get(user=user)
+        except self.settings_model.DoesNotExist:
+            settings = None
 
-        if request.method in ['GET', 'PUT', 'DELETE'] and pushover_settings is None:
+        if request.method in ['GET', 'PUT', 'DELETE'] and settings is None:
             raise exceptions.NotFound(detail='does not exist for this user')
 
         if request.method == 'GET':
-            serializer = serializers.PushoverSettingsSerializer(instance=pushover_settings)
+            serializer = self.serializer_class(instance=settings)
             return Response(serializer.data)
 
         elif request.method == 'POST':
-            if pushover_settings is not None:
-                return Response({'detail': 'pushover-settings already exist for this user'},
+            if settings is not None:
+                return Response({'detail': 'already exist for this user'},
                                 status=status.HTTP_409_CONFLICT)
-            pushover_settings = models.PushoverSettings(user=user)
-            serializer = serializers.PushoverSettingsSerializer(instance=pushover_settings, data=request.data)
+            settings = self.settings_model(user=user)
+            serializer = self.serializer_class(instance=settings, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
 
         elif request.method == 'PUT':
-            serializer = serializers.PushoverSettingsSerializer(instance=pushover_settings, data=request.data)
+            serializer = self.serializer_class(instance=settings, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
 
         elif request.method == 'DELETE':
-            pushover_settings.delete()
+            settings.delete()
             return Response({'detail': 'successfully deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class PushoverSettingsViewSet(_DeliveryServiceSettingsViewSet):
+    settings_model = models.PushoverSettings
+    serializer_class = serializers.PushoverSettingsSerializer
+    queryset = models.PushoverSettings.objects.all()
