@@ -50,6 +50,30 @@ class PushoverSettings(models.Model):
     )
 
 
+class CalDavSettings(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    caldav_url = models.URLField(
+        max_length=255,
+        null=False,
+    )
+    calendar_url = models.URLField(
+        max_length=255,
+        null=False,
+    )
+    username = models.CharField(
+        max_length=255,
+        null=False,
+    )
+    password = models.CharField(
+        max_length=255,
+        null=False,
+    )
+
+
 class CeleryTaskRun(models.Model):
     task = models.CharField(
         max_length=255,
