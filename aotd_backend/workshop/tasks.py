@@ -7,9 +7,11 @@ import base64
 from datetime import datetime
 import os
 import logging
+import caldav
+import icalendar
 from datetime import datetime, time
 
-from . import models, ai, delivery_services
+from . import models, ai, delivery_services, data_sources
 
 logger = logging.getLogger(__name__)
 
@@ -50,22 +52,23 @@ def generate_artwork(user_id: int):
     user = models.CustomUser.objects.get(pk=user_id)
     logger.info(f'generating artwork for {user.username}')
 
-    data: dict[str, any] = {
-        'weather': 'sunny',
-        'season': 'spring',
-        'activity': 'exploring lost place ruin (old castle)',
-        'style': 'cinematic shot'
-    }
+    # get data from sources
+    data_source_manager = data_sources.DataSourceManager(user=user)
+    data = data_source_manager.retrieve_data(query=datetime.now())
 
     # build prompt
     json_data: str = json.dumps(data)
+    logger.debug(f'data: {json_data}')
     chat_prompt_template: str = os.getenv('AOTD_CHAT_PROMPT_TEMPLATE')
+    logger.debug(f'chat prompt template: {chat_prompt_template}')
     chat_prompt: str = chat_prompt_template.replace('<JSON-DATA>', json_data)
+    logger.debug(f'chat prompt: {chat_prompt}')
 
     # prompt chat AI
     image_prompt = ai.chat_ai.generate(
         prompt=chat_prompt
     )
+    logger.debug(f'image prompt: {image_prompt}')
 
     # prompt image AI
     base64_image = ai.image_ai.generate(prompt=image_prompt)
