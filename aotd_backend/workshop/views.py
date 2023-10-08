@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from . import models, serializers, tasks
+from typing import Type
 
 
 # Create your views here.
@@ -58,9 +59,9 @@ class UserSettingsViewSet(viewsets.GenericViewSet):
             return Response(serializer.data)
 
 
-class _DeliveryServiceSettingsViewSet(viewsets.GenericViewSet):
-    settings_model: django.db.models.Model.__class__ = None
-    serializer_class: rest_framework.serializers.ModelSerializer.__class__ = None
+class AbstractDeliveryServiceSettingsViewSet(abc.ABC, viewsets.GenericViewSet):
+    settings_model: Type[django.db.models.Model] = None
+    serializer_class: Type[rest_framework.serializers.ModelSerializer] = None
     queryset: django.db.models.QuerySet = None
     permission_classes = [IsAuthenticated]
 
@@ -100,7 +101,7 @@ class _DeliveryServiceSettingsViewSet(viewsets.GenericViewSet):
             return Response({'detail': 'successfully deleted'}, status=status.HTTP_204_NO_CONTENT)
 
 
-class PushoverSettingsViewSet(_DeliveryServiceSettingsViewSet):
+class PushoverSettingsViewSet(AbstractDeliveryServiceSettingsViewSet):
     settings_model = models.PushoverSettings
     serializer_class = serializers.PushoverSettingsSerializer
     queryset = models.PushoverSettings.objects.all()
