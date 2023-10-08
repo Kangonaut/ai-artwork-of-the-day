@@ -6,7 +6,7 @@ from rest_framework import viewsets, mixins, status, exceptions
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from . import models, serializers, tasks
 from typing import Type
@@ -19,12 +19,12 @@ def hello_world(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def issue_artwork(request):
     tasks.generate_artwork.delay(request.user.id)
 
     return Response({
-        'status': 'request submitted successfully',
+        'status': 'generation process started successfully',
     })
 
 
