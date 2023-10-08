@@ -9,7 +9,6 @@ class CustomUser(AbstractUser):
     first_name = None
     last_name = None
     is_staff = None
-    is_superuser = None
 
     objects = managers.CustomUserManager()
 
