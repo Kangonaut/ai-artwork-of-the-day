@@ -28,38 +28,38 @@ def issue_artwork(request):
     })
 
 
-class UserSettingsViewSet(viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = models.UserSettings.objects.all()
-    serializer_class = serializers.UserSettingsSerializer
+# class UserSettingsViewSet(viewsets.GenericViewSet):
+#     permission_classes = [IsAuthenticated]
+#     queryset = models.UserSettings.objects.all()
+#     serializer_class = serializers.UserSettingsSerializer
+#
+#     @action(detail=False, methods=['GET', 'POST', 'PUT'])  # endpoint: 'user-settings/me'
+#     def me(self, request):
+#         user: models.CustomUser = request.user
+#         user_settings, created = models.UserSettings.objects.get_or_create(user=user)
+#
+#         if request.method == 'GET':
+#             serializer = serializers.UserSettingsSerializer(instance=user_settings)
+#             return Response(serializer.data)
+#
+#         elif request.method == 'POST':
+#             if created:
+#                 serializer = serializers.UserSettingsSerializer(instance=user_settings, data=request.data)
+#                 serializer.is_valid(raise_exception=True)
+#                 serializer.save()
+#                 return Response(serializer.data)
+#             else:
+#                 return Response({'detail': 'user-settings already exist for this user'},
+#                                 status=status.HTTP_409_CONFLICT)
+#
+#         elif request.method == 'PUT':
+#             serializer = serializers.UserSettingsSerializer(instance=user_settings, data=request.data)
+#             serializer.is_valid(raise_exception=True)
+#             serializer.save()
+#             return Response(serializer.data)
 
-    @action(detail=False, methods=['GET', 'POST', 'PUT'])  # endpoint: 'user-settings/me'
-    def me(self, request):
-        user: models.CustomUser = request.user
-        user_settings, created = models.UserSettings.objects.get_or_create(user=user)
 
-        if request.method == 'GET':
-            serializer = serializers.UserSettingsSerializer(instance=user_settings)
-            return Response(serializer.data)
-
-        elif request.method == 'POST':
-            if created:
-                serializer = serializers.UserSettingsSerializer(instance=user_settings, data=request.data)
-                serializer.is_valid(raise_exception=True)
-                serializer.save()
-                return Response(serializer.data)
-            else:
-                return Response({'detail': 'user-settings already exist for this user'},
-                                status=status.HTTP_409_CONFLICT)
-
-        elif request.method == 'PUT':
-            serializer = serializers.UserSettingsSerializer(instance=user_settings, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-
-
-class AbstractDeliveryServiceSettingsViewSet(abc.ABC, viewsets.GenericViewSet):
+class AbstractSettingsViewSet(abc.ABC, viewsets.GenericViewSet):
     settings_model: Type[django.db.models.Model] = None
     serializer_class: Type[rest_framework.serializers.ModelSerializer] = None
     queryset: django.db.models.QuerySet = None
@@ -101,7 +101,13 @@ class AbstractDeliveryServiceSettingsViewSet(abc.ABC, viewsets.GenericViewSet):
             return Response({'detail': 'successfully deleted'}, status=status.HTTP_204_NO_CONTENT)
 
 
-class PushoverSettingsViewSet(AbstractDeliveryServiceSettingsViewSet):
+class UserSettingsViewSet(AbstractSettingsViewSet):
+    settings_model = models.UserSettings
+    serializer_class = serializers.UserSettingsSerializer
+    queryset = models.UserSettings.objects.all()
+
+
+class PushoverSettingsViewSet(AbstractSettingsViewSet):
     settings_model = models.PushoverSettings
     serializer_class = serializers.PushoverSettingsSerializer
     queryset = models.PushoverSettings.objects.all()
