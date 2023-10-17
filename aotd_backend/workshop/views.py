@@ -111,3 +111,9 @@ class PushoverSettingsViewSet(AbstractSettingsViewSet):
     settings_model = models.PushoverSettings
     serializer_class = serializers.PushoverSettingsSerializer
     queryset = models.PushoverSettings.objects.all()
+
+
+class OpenWeatherSettingsViewSet(AbstractSettingsViewSet):
+    settings_model = models.OpenWeatherSettings
+    serializer_class = serializers.OpenWeatherSettingsSerializer
+    queryset = models.OpenWeatherSettings.objects.all()
