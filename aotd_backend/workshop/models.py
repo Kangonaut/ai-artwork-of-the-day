@@ -74,6 +74,24 @@ class CalDavSettings(models.Model):
     )
 
 
+class OpenWeatherSettings(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        primary_key=True,
+        on_delete=models.CASCADE
+    )
+    lat = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        null=False,
+    )
+    lon = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        null=False,
+    )
+
+
 class CeleryTaskRun(models.Model):
     task = models.CharField(
         max_length=255,
