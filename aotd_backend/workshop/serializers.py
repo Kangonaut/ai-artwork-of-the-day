@@ -18,3 +18,9 @@ class OpenWeatherSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OpenWeatherSettings
         fields = ['lat', 'lon']
+
+
+class CalDavSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CalDavSettings
+        fields = ['caldav_url', 'calendar_url', 'username', 'password']

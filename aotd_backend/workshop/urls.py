@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 router.register('user-settings', views.UserSettingsViewSet)
 router.register('pushover-settings', views.PushoverSettingsViewSet)
 router.register('open-weather-settings', views.OpenWeatherSettingsViewSet)
+router.register('caldav-settings', views.CalDavSettingsViewSet)
 
 urlpatterns = [
     path('hello-world/', views.hello_world),

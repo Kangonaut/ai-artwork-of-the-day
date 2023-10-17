@@ -53,8 +53,8 @@ class PushoverSettings(models.Model):
 class CalDavSettings(models.Model):
     user = models.OneToOneField(
         CustomUser,
-        on_delete=models.CASCADE,
         primary_key=True,
+        on_delete=models.CASCADE,
     )
     caldav_url = models.URLField(
         max_length=255,

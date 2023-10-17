@@ -117,3 +117,9 @@ class OpenWeatherSettingsViewSet(AbstractSettingsViewSet):
     settings_model = models.OpenWeatherSettings
     serializer_class = serializers.OpenWeatherSettingsSerializer
     queryset = models.OpenWeatherSettings.objects.all()
+
+
+class CalDavSettingsViewSet(AbstractSettingsViewSet):
+    settings_model = models.CalDavSettings
+    serializer_class = serializers.CalDavSettingsSerializer
+    queryset = models.CalDavSettings.objects.all()
