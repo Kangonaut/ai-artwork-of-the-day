@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import abc
+import decimal
 import logging
+import os
 from datetime import datetime, time
 import caldav
 import django.db.models
 import icalendar
+import pyowm
 from users.models import CustomUser
 from . import models, exceptions
 from typing import Type
@@ -80,28 +83,54 @@ class CalDavDataSource(AbstractDataSource):
         return data
 
 
+class OpenWeatherDataSource(AbstractDataSource):
+    units = os.getenv('OWM_UNITS')
+    open_weather_map = pyowm.owm.OWM(api_key=os.getenv('OWM_API_KEY'))
+    weather_manager = open_weather_map.weather_manager()
+
+    def __init__(self, latitude: decimal.Decimal, longitude: decimal.Decimal, **kwargs):
+        super().__init__(**kwargs)
+
+        self.latitude = latitude
+        self.longitude = longitude
+
+    def retrieve_data(self, query: datetime) -> dict[str, any]:
+        one_call: pyowm.owm.weather_manager.one_call.OneCall = self.weather_manager.one_call(
+            lat=float(self.latitude),
+            lon=float(self.longitude),
+            units=self.units,
+        )
+        current_weather: pyowm.owm.weather_manager.one_call.Weather = one_call.current
+
+        return {
+            'general_description': current_weather.detailed_status,
+            'reference_time': f'{current_weather.reference_time(timeformat="iso")}',
+            'sunrise_time': f'{current_weather.sunrise_time(timeformat="iso")}',
+            'sunset_time': f'{current_weather.sunset_time(timeformat="iso")}',
+            'temperature': f'{current_weather.temp} celsius',
+            'dewpoint': f'{current_weather.dewpoint} celsius',
+            'humidity': f'{current_weather.humidity} %',
+            'cloudiness': f'{current_weather.clouds} %',
+            'wind': f'{current_weather.wind(unit="meters_sec")} m/s',
+            'rain': f'{current_weather.rain} mm/h',
+            'snow': f'{current_weather.snow} mm/h',
+        }
+
+
 class CalDavDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
     settings_model: Type[django.db.models.Model] = models.CalDavSettings
     data_source: Type[AbstractDataSource] = CalDavDataSource
 
 
-# class CalDavDataSourceConfigurator(AbstractDataSourceConfigurator):
-#     def configure(self, user: CustomUser) -> AbstractDataSource:
-#         try:
-#             settings = models.CalDavSettings.objects.get(user=user)
-#         except models.CalDavSettings.DoesNotExist:
-#             raise exceptions.SettingsNotConfigured(service_class=CalDavDataSource.__class__)
-#
-#         return CalDavDataSource(
-#             caldav_url=settings.caldav_url,
-#             calendar_url=settings.calendar_url,
-#             username=settings.username,
-#             password=settings.password,
-#         )
+class OpenWeatherDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
+    settings_model: Type[django.db.models.Model] = models.OpenWeatherSettings
+    data_source: Type[AbstractDataSource] = OpenWeatherDataSource
+
 
 class DataSourceManager(AbstractDataSource):
     DATA_SOURCE_ClASSES: dict[str, Type[AbstractDataSourceConfigurator]] = {
         'calendar': CalDavDataSourceConfigurator,
+        'weather': OpenWeatherDataSourceConfigurator,
     }
 
     def __init__(self, user: CustomUser, **kwargs):

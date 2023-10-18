@@ -80,12 +80,12 @@ class OpenWeatherSettings(models.Model):
         primary_key=True,
         on_delete=models.CASCADE
     )
-    lat = models.DecimalField(
+    latitude = models.DecimalField(
         max_digits=4,
         decimal_places=2,
         null=False,
     )
-    lon = models.DecimalField(
+    longitude = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         null=False,

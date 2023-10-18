@@ -1,3 +1,5 @@
+import json
+
 import requests
 import base64
 import abc
@@ -28,7 +30,8 @@ class _Pushover(DeliveryService):
         with artwork.image.file.open() as image_file:
             base64_image: bytes = base64.b64encode(image_file.read())
 
-            text: str = f"""AI Artwork of the Day!\nprompt: {artwork.image_prompt}"""
+            pretty_json_data = json.dumps(artwork.data, indent=4)
+            text: str = f"""AI Artwork of the Day!\nprompt: {artwork.image_prompt}\ndata: {pretty_json_data}"""
 
             user_key: str = settings.user_key
             application_api_key: str = os.getenv('PUSHOVER_APPLICATION_API_KEY')
