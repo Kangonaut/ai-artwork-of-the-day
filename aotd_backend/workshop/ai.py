@@ -24,7 +24,7 @@ class _ChatAi:
 
     def generate(self, prompt: str) -> str:
         response = openai.ChatCompletion.create(
-            model='gpt-3.5-turbo',
+            model=os.getenv('OPENAI_CHAT_MODEL'),
             n=1,
             max_tokens=100,
             messages=[

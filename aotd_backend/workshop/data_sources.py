@@ -104,7 +104,7 @@ class OpenWeatherDataSource(AbstractDataSource):
 
         return {
             'general_description': current_weather.detailed_status,
-            'reference_time': f'{current_weather.reference_time(timeformat="iso")}',
+            'current_time': f'{current_weather.reference_time(timeformat="iso")}',
             'sunrise_time': f'{current_weather.sunrise_time(timeformat="iso")}',
             'sunset_time': f'{current_weather.sunset_time(timeformat="iso")}',
             'temperature': f'{current_weather.temp} celsius',
