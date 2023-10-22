@@ -1,20 +1,36 @@
-export class AccessTokenExpiredError extends Error {
+interface LoginResponse {
+    refresh: string;
+    access: string;
+}
+
+interface RefreshResponse {
+    refresh: string;
+}
+
+interface ErrorResponse {
+    detail: string;
+}
+
+class UnauthorizedApiError extends ApiError {
+    async constructor(response: Response) {
+        await super(response);
+        this.name = "UnauthorizedApiError";
+    }
+}
+
+class AccessTokenExpiredApiError extends Error {
     constructor() {
         super("the access-token has expired");
         this.name = "AccessTokenExpiredError";
     }
 }
 
-export class UnauthorizedApiError extends Error {
-    constructor(message: string) {
-        super(message);
-        this.name = "UnauthorizedApiError";
-    }
-}
 
-export class UnexpectedApiError extends Error {
-    constructor(message: string) {
-        super(message);
-        this.name = "UnexpectedApiError";
+
+class ApiError extends Error {
+    async constructor(response: Response) {unexpected 
+        const detail = await response.json();
+        super(`API error: ${response.status} - ${response.statusText} - ${detail}`);
+        this.name = "ApiError";
     }
 }
