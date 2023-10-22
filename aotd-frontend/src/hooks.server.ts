@@ -1,19 +1,14 @@
+import { AuthApi } from "$lib/apis/auth-api";
+import { AuthManager } from "$lib/managers/auth-manager";
+import type { UserData } from "$lib/types/user";
 import type { Handle } from "@sveltejs/kit";
 
 export const handle: Handle = async ({ event, resolve }) => {
-    const access = await event.cookies.get("access");
+    const authManager: AuthManager = new AuthManager(event.cookies);
+    const userData: UserData = await authManager.getUserData();
 
-    const response = await fetch("http://localhost:8000/auth/users/me", {
-        headers: {
-            "Authorization": `JWT ${access}`,
-        }
-    });
-
-    if (response.ok) {
-        const user = await response.json();
-        console.log(`loaded user: ${JSON.stringify(user)}`);
-        (event.locals as any).user = user;
-    }
+    // make user data available to all pages
+    (event.locals as any).user = userData;    
 
     return resolve(event);
 }

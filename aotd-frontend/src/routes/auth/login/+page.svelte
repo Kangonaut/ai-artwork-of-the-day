@@ -47,8 +47,8 @@
     </div>
 
     {#if form?.error}
-      <div class="my-10">
-        <p class="variant-ghost-error">{form.error}</p>
+      <div class="my-20">
+        <div class="card p-4 variant-ghost-error">{form.error}</div>
       </div>
     {/if}
   </form>

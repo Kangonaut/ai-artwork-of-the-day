@@ -27,8 +27,8 @@ export const actions: Actions = {
 
             // set cookies
             const authCookies = new AuthCookies(cookies);
-            authCookies.setRefreshTokenCookie(response.refresh);
-            authCookies.setAccessTokenCookie(response.access);
+            authCookies.refreshToken = response.refresh;
+            authCookies.accessToken = response.access;
         } catch (error) {
             if (error instanceof Error)
                 return fail(400, { error: error.message });
