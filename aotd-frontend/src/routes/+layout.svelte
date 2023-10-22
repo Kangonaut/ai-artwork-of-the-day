@@ -13,7 +13,8 @@
   } from "@floating-ui/dom";
   import { storePopup } from "@skeletonlabs/skeleton";
   import { page } from "$app/stores";
-    import type { LayoutData } from "./$types";
+  import type { LayoutData } from "./$types";
+  import NavButton from "$lib/components/NavButton.svelte";
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   export let data: LayoutData;
@@ -25,49 +26,43 @@
     <!-- App Bar -->
     <AppBar>
       <svelte:fragment slot="lead">
-        <strong class="text-xl uppercase">Skeleton</strong>
+        <strong class="text-xl">AI Artwork of the Day</strong>
       </svelte:fragment>
       <svelte:fragment slot="trail">
-        <a
-          class="btn btn-sm variant-ghost-surface"
-          href="https://discord.gg/EXqV7W8MtY"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Discord
-        </a>
-        <a
-          class="btn btn-sm variant-ghost-surface"
-          href="https://twitter.com/SkeletonUI"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Twitter
-        </a>
-        <a
-          class="btn btn-sm variant-ghost-surface"
-          href="https://github.com/skeletonlabs/skeleton"
-          target="_blank"
-          rel="noreferrer"
-        >
-          GitHub
-        </a>
+        <NavButton title="Home" pathname="/" />
+        <NavButton title="Artworks" pathname="/artworks" />
+
         {#if $page.data.user}
-          <a
-            class="btn btn-sm variant-ghost-primary"
-            href="https://github.com/skeletonlabs/skeleton"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {data.user.username}
-          </a>
           <form action="/auth/logout" method="POST">
-            <button type="submit" class="btn btn-sm variant-ghost-error">logout</button>
+            <button type="submit" class="btn btn-md variant-ghost-error"
+              >Logout</button
+            >
           </form>
+        {:else}
+          <NavButton title="Login" pathname="/auth/login" />
         {/if}
       </svelte:fragment>
     </AppBar>
   </svelte:fragment>
   <!-- Page Route Content -->
   <slot />
+  <svelte:fragment slot="footer">
+    <AppBar class="items-center">
+      <a
+        class="btn btn-sm variant-ghost-surface"
+        href="https://github.com/Kangonaut/ai-artwork-of-the-day"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <box-icon
+          class="mr-1"
+          type="logo"
+          size="sm"
+          name="github"
+          color="white"
+        />
+        GitHub
+      </a>
+    </AppBar>
+  </svelte:fragment>
 </AppShell>
