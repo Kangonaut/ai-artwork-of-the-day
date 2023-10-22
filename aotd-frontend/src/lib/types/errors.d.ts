@@ -1,16 +1,3 @@
-interface LoginResponse {
-    refresh: string;
-    access: string;
-}
-
-interface RefreshResponse {
-    refresh: string;
-}
-
-interface ErrorResponse {
-    detail: string;
-}
-
 class UnauthorizedApiError extends ApiError {
     async constructor(response: Response) {
         await super(response);

@@ -3,7 +3,7 @@ import type { UserData } from "$lib/types/user";
 import type { Cookies } from "@sveltejs/kit";
 
 export class UserCookies {
-    private static readonly _USER_COOKIE_MAX_AGE: number = 60 * 60 * 24 * 1; // 1 day
+    private static readonly _USER_COOKIE_MAX_AGE: number = 60 * 60 * 1; // 1 hour
 
     constructor(private _cookies: Cookies) { }
 
@@ -27,5 +27,11 @@ export class UserCookies {
 
     public set userData(userData: UserData) {
         this._setUserCookie("userData", JSON.stringify(userData));
+    }
+
+    public async clearCookies(): Promise<void> {
+        this._cookies.delete("userData", {
+            path: "/",
+        });
     }
 }

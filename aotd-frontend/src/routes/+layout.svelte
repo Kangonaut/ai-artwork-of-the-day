@@ -61,6 +61,9 @@
           >
             {data.user.username}
           </a>
+          <form action="/auth/logout" method="POST">
+            <button type="submit" class="btn btn-sm variant-ghost-error">logout</button>
+          </form>
         {/if}
       </svelte:fragment>
     </AppBar>

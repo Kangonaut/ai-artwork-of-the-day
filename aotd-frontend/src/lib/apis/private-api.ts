@@ -1,19 +1,25 @@
-import { error, type Cookies } from "@sveltejs/kit";
+import { error, type Cookies, redirect } from "@sveltejs/kit";
 import { AuthCookies } from "$lib/cookies/auth-cookies";
+import { AuthApi } from "./auth-api";
 
 export class PrivateApi {
     private _authCookies: AuthCookies;
+    private _authApi: AuthApi;
 
     constructor(private _cookies: Cookies) {
         this._authCookies = new AuthCookies(this._cookies);
+        this._authApi = new AuthApi(this._cookies);
     }
 
-    private async _fetch(url: string, init: RequestInit): Promise<object> {
+    private async _fetch(url: string, init: RequestInit): Promise<never | object> {
         // check if accessToken cookie expired
-        const accessToken = this._authCookies.accessToken;
+        let accessToken = this._authCookies.accessToken;
         if (!accessToken) {
-            // TODO: implement refresh
-            throw new AccessTokenExpiredApiError();
+            // perform refresh
+            await this._authApi.refresh();
+
+            // acquire new access token
+            accessToken = this._authCookies.accessToken;
         }
 
         // set headers
@@ -29,7 +35,15 @@ export class PrivateApi {
         const responseData = await response.json();
         if (response.ok)
             return responseData;
-        else {
+        else if (response.status === 401) {
+            console.warn(`unauthorized error: ${JSON.stringify(responseData)}`);
+
+            // logout to invalidate session
+            await this._authApi.logout();
+
+            console.error("this should never happen!");
+            throw new Error("this should never happen!"); // to shut up type checking
+        } else {
             const errorResponse = responseData as ErrorResponse;
             throw error(response.status, {
                 message: errorResponse.detail,

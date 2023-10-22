@@ -30,6 +30,8 @@
   "type": "module",
   "dependencies": {
     "@floating-ui/dom": "1.5.3",
-    "boxicons": "^2.1.4"
+    "@types/jsonwebtoken": "^9.0.4",
+    "boxicons": "^2.1.4",
+    "jsonwebtoken": "^9.0.2"
   }
 }

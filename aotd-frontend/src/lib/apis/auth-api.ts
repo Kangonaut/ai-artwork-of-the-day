@@ -1,16 +1,17 @@
-import { BASE_API_URL } from "$env/static/private";
-import { PrivateApi } from "./private-api";
+import { API_BASE_URL } from "$env/static/private";
 import { redirect, type Cookies, error, fail, ActionFailure } from "@sveltejs/kit";
-import type { UserData } from "$lib/types/user";
 import { AuthCookies } from "$lib/cookies/auth-cookies";
+import { UserCookies } from "$lib/cookies/user-cookies";
 
 export class AuthApi {
-    private static readonly _API_URL: string = `${BASE_API_URL}/auth`;
+    private static readonly _API_URL: string = `${API_BASE_URL}/auth`;
 
     private _authCookies: AuthCookies;
+    private _userCookies: UserCookies;
 
     constructor(private _cookies: Cookies) {
         this._authCookies = new AuthCookies(this._cookies);
+        this._userCookies = new UserCookies(this._cookies);
     }
 
     public async login(username: string, password: string): Promise<ActionFailure<{ error: string }>> {
@@ -36,8 +37,8 @@ export class AuthApi {
             this._authCookies.refreshToken = loginResponse.refresh;
             this._authCookies.accessToken = loginResponse.access;
 
-            // redirect to user page
-            throw redirect(302, "/user/me");
+            // redirect to root
+            throw redirect(302, "/");
         }
         else {
             const errorReponse: ErrorResponse = (responseData as ErrorResponse);
@@ -47,9 +48,16 @@ export class AuthApi {
         }
     }
 
-    public async refresh(): Promise<void> {
-        console.info("starting refresh");
+    public async logout(): Promise<never> {
+        // clear auth and user related cookies
+        await this._authCookies.clearCookies();
+        await this._userCookies.clearCookies();
 
+        // redirect to root
+        throw redirect(302, "/");
+    }
+
+    public async refresh(): Promise<void> {
         // check if refreshToken cookie has expired
         const refreshToken = this._authCookies.refreshToken;
         if (!refreshToken) {
@@ -73,7 +81,7 @@ export class AuthApi {
         const responseData = await response.json();
         if (response.ok) {
             const refreshResponse: RefreshResponse = responseData as RefreshResponse;
-            this._authCookies.accessToken = refreshResponse.refresh;
+            this._authCookies.accessToken = refreshResponse.access;
         } else {
             const errorReponse: ErrorResponse = (responseData as ErrorResponse);
             throw error(response.status, {
