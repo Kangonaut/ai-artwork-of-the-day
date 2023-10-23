@@ -1,4 +1,4 @@
-import { AuthApi } from "$lib/apis/auth-api";
+import { AuthApi } from "$lib/server/apis/auth-api";
 import { redirect, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 

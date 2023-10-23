@@ -1,4 +1,4 @@
-import { AuthApi } from "$lib/apis/auth-api";
+import { AuthApi } from "$lib/server/apis/auth-api";
 import type { Actions } from "@sveltejs/kit";
 
 export const actions: Actions = {

@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "$env/static/private";
 import { redirect, type Cookies, error, fail, ActionFailure } from "@sveltejs/kit";
-import { AuthCookies } from "$lib/cookies/auth-cookies";
-import { UserCookies } from "$lib/cookies/user-cookies";
+import { AuthCookies } from "$lib/server/cookies/auth-cookies";
+import { UserCookies } from "$lib/server/cookies/user-cookies";
 
 export class AuthApi {
     private static readonly _API_URL: string = `${API_BASE_URL}/auth`;

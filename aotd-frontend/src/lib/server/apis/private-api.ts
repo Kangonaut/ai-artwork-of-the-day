@@ -1,5 +1,5 @@
 import { error, type Cookies, redirect } from "@sveltejs/kit";
-import { AuthCookies } from "$lib/cookies/auth-cookies";
+import { AuthCookies } from "$lib/server/cookies/auth-cookies";
 import { AuthApi } from "./auth-api";
 
 export class PrivateApi {

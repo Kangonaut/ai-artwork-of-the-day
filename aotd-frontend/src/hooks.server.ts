@@ -1,5 +1,5 @@
-import { UserApi } from "$lib/apis/user-api";
-import { AuthCookies } from "$lib/cookies/auth-cookies";
+import { UserApi } from "$lib/server/apis/user-api";
+import { AuthCookies } from "$lib/server/cookies/auth-cookies";
 import { redirect, type Handle } from "@sveltejs/kit";
 
 export const handle: Handle = async ({ event, resolve }) => {
