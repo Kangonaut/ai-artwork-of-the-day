@@ -14,10 +14,10 @@
   {#each data.artworks as artwork (artwork.id)}
     <div class="card card-hover overflow-hidden">
       <img
+        class="brightness-50"
         src="https://picsum.photos/seed/{getImageId()}/1024/1024"
         alt="artwork"
       />
-      <div class="p-5 -mt-32 max-h-32 text-4xl font-extrabold">{artwork.id}</div>
     </div>
   {/each}
 </div>
