@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
+
+import users.models
 from . import models, serializers, tasks
 from typing import Type
 
@@ -65,6 +67,7 @@ class AbstractSettingsViewSet(abc.ABC, viewsets.GenericViewSet):
     queryset: django.db.models.QuerySet = None
     permission_classes = [IsAuthenticated]
 
+    # detail = False -> URL does not contain instance pk
     @action(detail=False, methods=['GET', 'POST', 'PUT', 'DELETE'])
     def me(self, request: Request):
         user: models.CustomUser = request.user
@@ -123,3 +126,17 @@ class CalDavSettingsViewSet(AbstractSettingsViewSet):
     settings_model = models.CalDavSettings
     serializer_class = serializers.CalDavSettingsSerializer
     queryset = models.CalDavSettings.objects.all()
+
+
+class PrivateArtworkViewSet(
+    viewsets.GenericViewSet,
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+):
+    serializer_class = serializers.ArtworkSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return models.Artwork.objects.filter(
+            user=self.request.user,
+        )

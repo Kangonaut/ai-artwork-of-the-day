@@ -24,3 +24,9 @@ class CalDavSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CalDavSettings
         fields = ['caldav_url', 'calendar_url', 'username', 'password']
+
+
+class ArtworkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Artwork
+        fields = ['id', 'created_at', 'data', 'image_prompt']
