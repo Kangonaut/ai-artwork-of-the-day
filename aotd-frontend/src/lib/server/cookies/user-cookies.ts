@@ -1,5 +1,5 @@
 import { SERVER_ENV } from "$env/static/private";
-import type { UserData } from "$lib/server/types/user";
+import type { UserData } from "$lib/types/user";
 import type { Cookies } from "@sveltejs/kit";
 
 export class UserCookies {

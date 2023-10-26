@@ -1,4 +1,4 @@
-import type { UserData } from "$lib/server/types/user";
+import type { UserData } from "$lib/types/user";
 import type { Cookies } from "@sveltejs/kit";
 import { AuthApi } from "./auth-api";
 import { UserCookies } from "$lib/server/cookies/user-cookies";

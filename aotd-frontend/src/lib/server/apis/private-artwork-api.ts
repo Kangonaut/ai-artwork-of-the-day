@@ -1,6 +1,7 @@
 import type { Cookies } from "@sveltejs/kit";
 import { PrivateApi } from "./private-api";
 import { API_BASE_URL } from "$env/static/private";
+import type { Artwork } from "$lib/types/artwork";
 
 export class PrivateArtworkApi {
     private _privateApi: PrivateApi;
