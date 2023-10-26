@@ -30,7 +30,7 @@
       </svelte:fragment>
       <svelte:fragment slot="trail">
         <NavButton title="Home" pathname="/" />
-        <NavButton title="Artworks" pathname="/artworks/private/" />
+        <NavButton title="Artworks" pathname="/artworks/private" />
 
         {#if $page.data.user}
           <form action="/auth/logout" method="POST">
@@ -39,7 +39,7 @@
             >
           </form>
         {:else}
-          <NavButton title="Login" pathname="/auth/login/" />
+          <NavButton title="Login" pathname="/auth/login" />
         {/if}
       </svelte:fragment>
     </AppBar>
