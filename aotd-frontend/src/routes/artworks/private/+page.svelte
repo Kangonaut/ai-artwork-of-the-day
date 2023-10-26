@@ -10,11 +10,10 @@
 </script>
 
 <!-- artworks -->
-<div class="grid grid-cols-3 gap-5 bg-white w-full p-10">
+<div class="grid grid-cols-3 gap-5 w-full p-10">
   {#each data.artworks as artwork (artwork.id)}
     <div class="card card-hover overflow-hidden">
       <img
-        class="brightness-50"
         src="https://picsum.photos/seed/{getImageId()}/1024/1024"
         alt="artwork"
       />
