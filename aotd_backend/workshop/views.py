@@ -1,4 +1,5 @@
 import abc
+from typing import Type
 
 import django.db.models
 import django.http as http
@@ -8,11 +9,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.views import APIView
 
-import users.models
-from . import models, serializers, tasks
-from typing import Type
+from . import models, serializers, tasks, permissions
 
 
 # Create your views here.
@@ -129,18 +127,35 @@ class CalDavSettingsViewSet(AbstractSettingsViewSet):
     queryset = models.CalDavSettings.objects.all()
 
 
-class PrivateArtworkViewSet(
+# class PrivateArtworkViewSet(
+#     viewsets.GenericViewSet,
+#     mixins.RetrieveModelMixin,
+#     mixins.ListModelMixin,
+# ):
+#     serializer_class = serializers.ArtworkSerializer
+#     permission_classes = [IsAuthenticated]
+#
+#     def get_queryset(self):
+#         return models.Artwork.objects.filter(
+#             user=self.request.user,
+#         ).order_by('-created_at')
+
+
+class ArtworkViewSet(
     viewsets.GenericViewSet,
     mixins.RetrieveModelMixin,
-    mixins.ListModelMixin,
 ):
     serializer_class = serializers.ArtworkSerializer
-    permission_classes = [IsAuthenticated]
+    queryset = models.Artwork.objects.all()
+    permission_classes = [IsAuthenticated, permissions.IsOwner]
 
-    def get_queryset(self):
-        return models.Artwork.objects.filter(
+    @action(detail=False, methods=['GET'])
+    def me(self, request: Request):
+        queryset = models.Artwork.objects.filter(
             user=self.request.user,
         ).order_by('-created_at')
+        serializer = self.serializer_class(instance=queryset, many=True)
+        return Response(serializer.data)
 
     @action(detail=True, methods=['GET'])
     def image(self, request: Request, pk: int):
