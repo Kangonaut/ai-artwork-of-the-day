@@ -31,7 +31,7 @@
       <svelte:fragment slot="trail">
         <NavButton title="Home" pathname="/" />
         <NavButton title="Artwork Hub" pathname="/artworks/hub" />
-        <NavButton title="My Artworks" pathname="/artworks/personal" />
+        <NavButton title="My Artworks" pathname="/artworks/personal" pattern="^/artworks/personal/\d" />
 
         {#if $page.data.user}
           <form action="/auth/logout" method="POST">
