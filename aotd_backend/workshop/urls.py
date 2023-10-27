@@ -10,11 +10,11 @@ router.register('pushover-settings', views.PushoverSettingsViewSet)
 router.register('open-weather-settings', views.OpenWeatherSettingsViewSet)
 router.register('caldav-settings', views.CalDavSettingsViewSet)
 
-# router.register('artworks/me', views.PrivateArtworkViewSet, basename='artwork')
 router.register('artworks', views.ArtworkViewSet, basename='artwork')
 
 urlpatterns = [
     path('hello-world/', views.hello_world),
     path('issue-artwork/', views.issue_artwork),
+    path('artworks/me', views.PersonalArtworksView.as_view()),
     path('', include(router.urls)),
 ]

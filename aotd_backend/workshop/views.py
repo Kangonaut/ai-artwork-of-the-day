@@ -4,7 +4,7 @@ from typing import Type
 import django.db.models
 import django.http as http
 import rest_framework.serializers
-from rest_framework import viewsets, mixins, status, exceptions
+from rest_framework import viewsets, mixins, status, exceptions, generics
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, action
@@ -161,3 +161,12 @@ class ArtworkViewSet(
     def image(self, request: Request, pk: int):
         artwork = self.get_queryset().get(pk=pk)
         return http.HttpResponse(artwork.image.file, content_type="image/png")
+
+
+class PersonalArtworksView(generics.ListAPIView):
+    serializer_class = serializers.ArtworkSerializer
+
+    def get_queryset(self):
+        return models.Artwork.objects.filter(
+            user=self.request.user,
+        ).order_by('-created_at')
