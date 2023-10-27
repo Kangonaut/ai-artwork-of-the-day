@@ -11,7 +11,7 @@
 >
   <img
     class="p-0.5 w-full object-cover rounded-lg"
-    src="http://localhost:5173/api/artwork-image/{artwork.id}"
+    src="/api/artwork/{artwork.id}/image"
     alt="Sunset in the mountains"
   />
   <div class="px-6 py-4">
