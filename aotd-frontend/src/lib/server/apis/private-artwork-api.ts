@@ -14,4 +14,9 @@ export class PrivateArtworkApi {
         const artworks = (await this._privateApi.get(`${API_BASE_URL}/workshop/artworks/me/`)) as Artwork[];
         return artworks;
     }
+
+    public async getArtworkImage(id: number): Promise<Blob> {
+        const image = (await this._privateApi.getImage(`${API_BASE_URL}/workshop/artworks/me/${id}/image`));
+        return image;
+    }
 }

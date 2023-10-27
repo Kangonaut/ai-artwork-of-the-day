@@ -11,7 +11,7 @@
 >
   <img
     class="p-0.5 w-full object-cover rounded-lg"
-    src="https://picsum.photos/seed/{imageId}/1024/1024"
+    src="http://localhost:5173/api/artwork-image/{artwork.id}"
     alt="Sunset in the mountains"
   />
   <div class="px-6 py-4">

@@ -57,6 +57,30 @@ export class PrivateApi {
         });
     }
 
+    public async getImage(url: string): Promise<Blob> {
+        let accessToken = this._authCookies.accessToken;
+        if (!accessToken) {
+            // perform refresh
+            await this._authApi.refresh();
+
+            // acquire new access token
+            accessToken = this._authCookies.accessToken;
+        }
+
+        const init: RequestInit = {};
+
+        // set headers
+        init.headers = {
+            "Authorization": `JWT ${accessToken}`,
+            "Content-Type": "application/json",
+        };
+
+        // make request
+        const response: Response = await fetch(url, init);
+
+        return response.blob();
+    }
+
     public async post(url: string, body: object): Promise<object> {
         return await this._fetch(url, {
             method: "POST",
