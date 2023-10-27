@@ -1,6 +1,7 @@
 import abc
 
 import django.db.models
+import django.http as http
 import rest_framework.serializers
 from rest_framework import viewsets, mixins, status, exceptions
 from rest_framework.request import Request
@@ -139,4 +140,9 @@ class PrivateArtworkViewSet(
     def get_queryset(self):
         return models.Artwork.objects.filter(
             user=self.request.user,
-        )
+        ).order_by('-created_at')
+
+    @action(detail=True, methods=['GET'])
+    def image(self, request: Request, pk: int):
+        artwork = self.get_queryset().get(pk=pk)
+        return http.HttpResponse(artwork.image.file, content_type="image/png")
