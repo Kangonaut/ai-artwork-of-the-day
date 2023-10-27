@@ -1,4 +1,4 @@
-import { PrivateArtworkApi } from "$lib/server/apis/private-artwork-api";
+import { PrivateArtworkApi } from "$lib/server/apis/personal-artwork-api";
 import type { RequestHandler } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({ cookies, params }) => {
