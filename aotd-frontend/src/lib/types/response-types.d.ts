@@ -10,3 +10,10 @@ interface RefreshResponse {
 interface ErrorResponse {
     detail: string;
 }
+
+interface PageResponse {
+    count: number;
+    next?: string;
+    previous?: string;
+    results: any[];
+}
