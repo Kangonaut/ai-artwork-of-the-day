@@ -34,7 +34,7 @@
         <NavButton title="My Artworks" pathname="/artworks/personal" pattern="^/artworks/personal/\d" />
 
         {#if $page.data.user}
-          <form action="/auth/logout" method="POST">
+          <form action="/api/auth/logout" method="POST">
             <button type="submit" class="btn btn-md variant-ghost-error"
               >Logout</button
             >
