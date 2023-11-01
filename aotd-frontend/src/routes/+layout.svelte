@@ -24,15 +24,26 @@
 <AppShell>
   <svelte:fragment slot="header">
     <!-- App Bar -->
-    <AppBar>
+    <AppBar
+      gridColumns="grid-cols-3"
+      slotDefault="place-self-center"
+      slotTrail="place-content-end"
+    >
       <svelte:fragment slot="lead">
-        <strong class="text-xl">AI Artwork of the Day</strong>
+        <a href="/" class="font-bold text-xl">AI Artwork of the Day</a>
       </svelte:fragment>
-      <svelte:fragment slot="trail">
+
+      <div class="flex space-x-5">
         <NavButton title="Home" pathname="/" />
         <NavButton title="Artwork Hub" pathname="/artworks/hub" />
-        <NavButton title="My Artworks" pathname="/artworks/personal" pattern="^/artworks/personal/\d" />
+        <NavButton
+          title="My Artworks"
+          pathname="/artworks/personal"
+          pattern="^/artworks/personal/\d"
+        />
+      </div>
 
+      <svelte:fragment slot="trail">
         {#if $page.data.user}
           <form action="/api/auth/logout" method="POST">
             <button type="submit" class="btn btn-md variant-ghost-error"

@@ -9,7 +9,7 @@
 </script>
 
 <a
-        class="btn btn-bg"
+        class="btn btn-bg w-40"
         class:variant-ghost-primary={isActive}
         class:variant-ghost-surface={!isActive}
         href={pathname}
