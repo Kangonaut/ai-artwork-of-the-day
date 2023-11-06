@@ -128,7 +128,7 @@
   {
     "model": "workshop.ArtStyle",
     "fields": {
-      "name": "child painting"
+      "name": "mosaic"
     }
   },
   {
