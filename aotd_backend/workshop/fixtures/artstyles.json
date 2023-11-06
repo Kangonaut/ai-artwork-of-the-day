@@ -1,0 +1,108 @@
+[
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "realism"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "photorealism"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "expressionism"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "impressionism"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "surrealism"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "zero group"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "street art"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "futurism"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "digital art"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "baroque"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "pop art"
+    }
+  },{
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "oil painting"
+    }
+  },{
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "watercolor painting"
+    }
+  },{
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "acrylic"
+    }
+  },{
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "gouache"
+    }
+  },{
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "pastel"
+    }
+  },{
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "encaustic"
+    }
+  },{
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "fresco"
+    }
+  },{
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "spray painting"
+    }
+  }
+]

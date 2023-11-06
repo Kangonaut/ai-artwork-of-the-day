@@ -105,6 +105,17 @@ class DayTimeSettings(models.Model):
     )
 
 
+class ArtStyle(models.Model):
+    name = models.CharField(
+        max_length=255,
+        null=False,
+        unique=True,
+    )
+    user = models.ManyToManyField(
+        CustomUser,
+    )
+
+
 class CeleryTaskRun(models.Model):
     task = models.CharField(
         max_length=255,
