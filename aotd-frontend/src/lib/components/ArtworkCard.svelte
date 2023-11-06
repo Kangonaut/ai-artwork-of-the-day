@@ -16,6 +16,5 @@
   />
   <div class="px-6 py-4">
     <div class="font-bold text-xl mb-2">{artwork.title}</div>
-    <p>{artwork.image_prompt}</p>
   </div>
 </div>
