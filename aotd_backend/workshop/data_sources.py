@@ -4,7 +4,7 @@ import abc
 import decimal
 import logging
 import os
-from datetime import datetime, time
+from datetime import datetime, time, timezone
 import caldav
 import django.db.models
 import icalendar
@@ -94,6 +94,18 @@ class OpenWeatherDataSource(AbstractDataSource):
         self.latitude = latitude
         self.longitude = longitude
 
+    def __determine_daytime(self, hour: int):
+        if 6 <= hour < 10:
+            return "morning"
+        elif 10 <= hour < 14:
+            return "midday"
+        elif 14 <= hour < 18:
+            return "afternoon"
+        elif 18 <= hour < 22:
+            return "evening"
+        else:
+            return "night"
+
     def retrieve_data(self, query: datetime) -> dict[str, any]:
         one_call: pyowm.owm.weather_manager.one_call.OneCall = self.weather_manager.one_call(
             lat=float(self.latitude),
@@ -102,18 +114,24 @@ class OpenWeatherDataSource(AbstractDataSource):
         )
         current_weather: pyowm.owm.weather_manager.one_call.Weather = one_call.current
 
+        # determine if dew
+        temperature: float = current_weather.temp["temp"]
+        dew_point: float = current_weather.dewpoint
+        is_dew: bool = temperature < dew_point
+
+        # determine if snow
+        is_snow: bool = current_weather.snow != {}
+
+        # determine if rain
+        is_rain: bool = current_weather.rain != {}
+
         return {
-            'general_description': current_weather.detailed_status,
-            'current_time': f'{current_weather.reference_time(timeformat="iso")}',
-            'sunrise_time': f'{current_weather.sunrise_time(timeformat="iso")}',
-            'sunset_time': f'{current_weather.sunset_time(timeformat="iso")}',
-            'temperature': f'{current_weather.temp} celsius',
-            'dewpoint': f'{current_weather.dewpoint} celsius',
-            'humidity': f'{current_weather.humidity} %',
-            'cloudiness': f'{current_weather.clouds} %',
-            'wind': f'{current_weather.wind(unit="meters_sec")} m/s',
-            'rain': f'{current_weather.rain} mm/h',
-            'snow': f'{current_weather.snow} mm/h',
+            "weather": {
+                "general": current_weather.detailed_status,
+                "is_dew": str(is_dew),
+                "is_rain": str(is_rain),
+                "is_snow": str(is_snow),
+            },
         }
 
 
@@ -128,10 +146,10 @@ class OpenWeatherDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
 
 
 class DataSourceManager(AbstractDataSource):
-    DATA_SOURCE_ClASSES: dict[str, Type[AbstractDataSourceConfigurator]] = {
-        'calendar': CalDavDataSourceConfigurator,
-        'weather': OpenWeatherDataSourceConfigurator,
-    }
+    DATA_SOURCE_ClASSES: list[Type[AbstractDataSourceConfigurator]] = [
+        CalDavDataSourceConfigurator,
+        OpenWeatherDataSourceConfigurator,
+    ]
 
     def __init__(self, user: CustomUser, **kwargs):
         super().__init__(**kwargs)
@@ -140,8 +158,8 @@ class DataSourceManager(AbstractDataSource):
     def retrieve_data(self, query: datetime) -> dict[str, any]:
         data: dict[str, any] = dict()
 
-        for key, data_source_class in self.DATA_SOURCE_ClASSES.items():
+        for data_source_class in self.DATA_SOURCE_ClASSES:
             data_source_instance = data_source_class.configure(user=self.user)
-            data[key] = data_source_instance.retrieve_data(query=query)
+            data |= data_source_instance.retrieve_data(query=query)
 
         return data
