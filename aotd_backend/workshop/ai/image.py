@@ -11,7 +11,8 @@ class _ImageAi:
             prompt=prompt,
             n=1,
             size=f'{self.image_width}x{self.image_height}',
-            response_format='b64_json'
+            response_format='b64_json',
+            model=os.getenv("AOTD_IMAGE_MODEL_NAME")
         )
         return image_response['data'][0]['b64_json']
 
