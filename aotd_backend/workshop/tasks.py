@@ -11,8 +11,8 @@ import caldav
 import icalendar
 from datetime import datetime, time
 
-from . import models, ai_legacy, delivery_services, data_sources
-from .ai import language_ai
+from . import models, delivery_services, data_sources
+from .ai import language_ai, image_ai
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +65,7 @@ def generate_artwork(user_id: int):
     title = language_ai.generate_artwork_title(image_prompt)
 
     # prompt image AI
-    base64_image = ai_legacy.image_ai.generate(prompt=image_prompt)
+    base64_image = image_ai.generate(prompt=image_prompt)
     image = base64.b64decode(base64_image)
     timestamp: str = datetime.now().isoformat()
     image_file = ContentFile(content=image, name=f'{timestamp}.png')
