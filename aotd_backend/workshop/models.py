@@ -92,6 +92,19 @@ class OpenWeatherSettings(models.Model):
     )
 
 
+class DayTimeSettings(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        primary_key=True,
+        on_delete=models.CASCADE
+    )
+    timezone_hour_offset = models.DecimalField(
+        max_digits=3,
+        decimal_places=1,
+        null=False,
+    )
+
+
 class CeleryTaskRun(models.Model):
     task = models.CharField(
         max_length=255,

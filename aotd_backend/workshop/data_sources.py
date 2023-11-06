@@ -4,7 +4,7 @@ import abc
 import decimal
 import logging
 import os
-from datetime import datetime, time, timezone
+from datetime import datetime, time, timezone, timedelta
 import caldav
 import django.db.models
 import icalendar
@@ -83,18 +83,13 @@ class CalDavDataSource(AbstractDataSource):
         return data
 
 
-class OpenWeatherDataSource(AbstractDataSource):
-    units = os.getenv('OWM_UNITS')
-    open_weather_map = pyowm.owm.OWM(api_key=os.getenv('OWM_API_KEY'))
-    weather_manager = open_weather_map.weather_manager()
-
-    def __init__(self, latitude: decimal.Decimal, longitude: decimal.Decimal, **kwargs):
+class DaytimeDataSource(AbstractDataSource):
+    def __init__(self, timezone_hour_offset: decimal.Decimal, **kwargs):
+        self.timezone_offset: timedelta = timedelta(hours=float(timezone_hour_offset))
         super().__init__(**kwargs)
 
-        self.latitude = latitude
-        self.longitude = longitude
-
-    def __determine_daytime(self, hour: int):
+    @staticmethod
+    def __determine_daytime(hour: int):
         if 6 <= hour < 10:
             return "morning"
         elif 10 <= hour < 14:
@@ -105,6 +100,26 @@ class OpenWeatherDataSource(AbstractDataSource):
             return "evening"
         else:
             return "night"
+
+    def retrieve_data(self, query: datetime) -> dict[str, any]:
+        curr_time = (datetime.utcnow() + self.timezone_offset).time()
+        daytime = self.__determine_daytime(hour=curr_time.hour)
+
+        return {
+            "daytime": daytime,
+        }
+
+
+class OpenWeatherDataSource(AbstractDataSource):
+    units = os.getenv('OWM_UNITS')
+    open_weather_map = pyowm.owm.OWM(api_key=os.getenv('OWM_API_KEY'))
+    weather_manager = open_weather_map.weather_manager()
+
+    def __init__(self, latitude: decimal.Decimal, longitude: decimal.Decimal, **kwargs):
+        super().__init__(**kwargs)
+
+        self.latitude = latitude
+        self.longitude = longitude
 
     def retrieve_data(self, query: datetime) -> dict[str, any]:
         one_call: pyowm.owm.weather_manager.one_call.OneCall = self.weather_manager.one_call(
@@ -145,10 +160,16 @@ class OpenWeatherDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
     data_source: Type[AbstractDataSource] = OpenWeatherDataSource
 
 
+class DaytimeDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
+    settings_model: Type[django.db.models.Model] = models.DayTimeSettings
+    data_source: Type[AbstractDataSource] = DaytimeDataSource
+
+
 class DataSourceManager(AbstractDataSource):
     DATA_SOURCE_ClASSES: list[Type[AbstractDataSourceConfigurator]] = [
         CalDavDataSourceConfigurator,
         OpenWeatherDataSourceConfigurator,
+        DaytimeDataSourceConfigurator,
     ]
 
     def __init__(self, user: CustomUser, **kwargs):
