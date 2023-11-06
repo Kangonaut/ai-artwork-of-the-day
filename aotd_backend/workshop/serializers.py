@@ -29,4 +29,4 @@ class CalDavSettingsSerializer(serializers.ModelSerializer):
 class ArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Artwork
-        fields = ['id', 'created_at', 'data', 'image_prompt']
+        fields = ['id', 'title', 'created_at', 'data', 'image_prompt']
