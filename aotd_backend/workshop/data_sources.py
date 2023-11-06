@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import abc
+import random
 import decimal
 import logging
 import os
@@ -83,33 +84,6 @@ class CalDavDataSource(AbstractDataSource):
         return data
 
 
-class DaytimeDataSource(AbstractDataSource):
-    def __init__(self, timezone_hour_offset: decimal.Decimal, **kwargs):
-        self.timezone_offset: timedelta = timedelta(hours=float(timezone_hour_offset))
-        super().__init__(**kwargs)
-
-    @staticmethod
-    def __determine_daytime(hour: int):
-        if 6 <= hour < 10:
-            return "morning"
-        elif 10 <= hour < 14:
-            return "midday"
-        elif 14 <= hour < 18:
-            return "afternoon"
-        elif 18 <= hour < 22:
-            return "evening"
-        else:
-            return "night"
-
-    def retrieve_data(self, query: datetime) -> dict[str, any]:
-        curr_time = (datetime.utcnow() + self.timezone_offset).time()
-        daytime = self.__determine_daytime(hour=curr_time.hour)
-
-        return {
-            "daytime": daytime,
-        }
-
-
 class OpenWeatherDataSource(AbstractDataSource):
     units = os.getenv('OWM_UNITS')
     open_weather_map = pyowm.owm.OWM(api_key=os.getenv('OWM_API_KEY'))
@@ -150,6 +124,44 @@ class OpenWeatherDataSource(AbstractDataSource):
         }
 
 
+class DaytimeDataSource(AbstractDataSource):
+    def __init__(self, timezone_hour_offset: decimal.Decimal, **kwargs):
+        self.timezone_offset: timedelta = timedelta(hours=float(timezone_hour_offset))
+        super().__init__(**kwargs)
+
+    @staticmethod
+    def __determine_daytime(hour: int):
+        if 6 <= hour < 10:
+            return "morning"
+        elif 10 <= hour < 14:
+            return "midday"
+        elif 14 <= hour < 18:
+            return "afternoon"
+        elif 18 <= hour < 22:
+            return "evening"
+        else:
+            return "night"
+
+    def retrieve_data(self, query: datetime) -> dict[str, any]:
+        curr_time = (datetime.utcnow() + self.timezone_offset).time()
+        daytime = self.__determine_daytime(hour=curr_time.hour)
+
+        return {
+            "daytime": daytime,
+        }
+
+
+class ArtStyleDataSource(AbstractDataSource):
+    def __init__(self, art_styles: list[str], **kwargs):
+        self.art_styles = art_styles
+        super().__init__(**kwargs)
+
+    def retrieve_data(self, query: datetime) -> dict[str, any]:
+        return {
+            "art_style": random.choice(self.art_styles)
+        }
+
+
 class CalDavDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
     settings_model: Type[django.db.models.Model] = models.CalDavSettings
     data_source: Type[AbstractDataSource] = CalDavDataSource
@@ -165,11 +177,27 @@ class DaytimeDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
     data_source: Type[AbstractDataSource] = DaytimeDataSource
 
 
+class ArtStyleDataSourceConfigurator(AbstractDataSourceConfigurator):
+    @classmethod
+    def configure(cls, user: CustomUser) -> AbstractDataSource:
+        art_styles_manager = user.artstyle_set
+
+        if art_styles_manager.count() == 0:
+            raise exceptions.SettingsNotConfigured(service_class=ArtStyleDataSource)
+
+        art_styles: list[str] = []
+        for art_style in art_styles_manager.all():
+            art_styles.append(art_style.name)
+
+        return ArtStyleDataSource(art_styles)
+
+
 class DataSourceManager(AbstractDataSource):
     DATA_SOURCE_ClASSES: list[Type[AbstractDataSourceConfigurator]] = [
         CalDavDataSourceConfigurator,
         OpenWeatherDataSourceConfigurator,
         DaytimeDataSourceConfigurator,
+        ArtStyleDataSourceConfigurator,
     ]
 
     def __init__(self, user: CustomUser, **kwargs):
