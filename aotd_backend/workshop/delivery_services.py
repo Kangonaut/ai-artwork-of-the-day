@@ -5,6 +5,8 @@ import base64
 import abc
 import os
 import logging
+from PIL import Image
+import io
 from . import models
 
 
@@ -28,7 +30,22 @@ class _Pushover(DeliveryService):
     @staticmethod
     def __prepare_payload(artwork: models.Artwork, settings: models.PushoverSettings):
         with artwork.image.file.open() as image_file:
-            base64_image: bytes = base64.b64encode(image_file.read())
+            original_image = Image.open(image_file)
+
+            # resize image
+            resized_image = original_image.resize(
+                size=(
+                    int(os.getenv("PUSHOVER_IMAGE_WIDTH")),
+                    int(os.getenv("PUSHOVER_IMAGE_HEIGHT"))
+                )
+            )
+
+            # convert Pillow image to jpeg
+            buffered_image = io.BytesIO()
+            resized_image.save(buffered_image, format="JPEG")
+
+            # Base64 encode image
+            base64_image: bytes = base64.b64encode(buffered_image.getvalue())
 
             pretty_json_data = json.dumps(artwork.data, indent=4)
             text: str = f"""AI Artwork of the Day!\nprompt: {artwork.image_prompt}\ndata: {pretty_json_data}"""
