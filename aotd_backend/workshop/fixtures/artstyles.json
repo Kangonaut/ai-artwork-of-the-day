@@ -64,45 +64,113 @@
     "fields": {
       "name": "pop art"
     }
-  },{
+  },
+  {
     "model": "workshop.ArtStyle",
     "fields": {
       "name": "oil painting"
     }
-  },{
+  },
+  {
     "model": "workshop.ArtStyle",
     "fields": {
       "name": "watercolor painting"
     }
-  },{
+  },
+  {
     "model": "workshop.ArtStyle",
     "fields": {
       "name": "acrylic"
     }
-  },{
+  },
+  {
     "model": "workshop.ArtStyle",
     "fields": {
       "name": "gouache"
     }
-  },{
+  },
+  {
     "model": "workshop.ArtStyle",
     "fields": {
       "name": "pastel"
     }
-  },{
+  },
+  {
     "model": "workshop.ArtStyle",
     "fields": {
       "name": "encaustic"
     }
-  },{
+  },
+  {
     "model": "workshop.ArtStyle",
     "fields": {
       "name": "fresco"
     }
-  },{
+  },
+  {
     "model": "workshop.ArtStyle",
     "fields": {
       "name": "spray painting"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "superhero comic"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "stick-figure comic"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "child painting"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "minimalism"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "vintage"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "geometric"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "vector"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "flat art"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "3d rendering"
+    }
+  },
+  {
+    "model": "workshop.ArtStyle",
+    "fields": {
+      "name": "psychedelic"
     }
   }
 ]
