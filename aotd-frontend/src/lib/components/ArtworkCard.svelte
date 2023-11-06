@@ -6,15 +6,16 @@
   let imageId = Math.floor(Math.random() * 100) + 1;
 </script>
 
-<div
+<a
   class="max-w-sm rounded-lg overflow-hidden shadow-md variant-ghost-primary card-hover"
+  href="/artwork/{artwork.id}"
 >
   <img
     class="p-0.5 w-full object-cover rounded-lg"
     src="/api/artwork/{artwork.id}/image"
-    alt="Sunset in the mountains"
+    alt="AI generated artwork"
   />
   <div class="px-6 py-4">
     <div class="font-bold text-xl mb-2">{artwork.title}</div>
   </div>
-</div>
+</a>

@@ -1,6 +1,5 @@
 <script lang="ts">
   import ArtworkCard from "$lib/components/ArtworkCard.svelte";
-  import type { Artwork } from "$lib/types/artwork";
   import type { PageData } from "./$types";
 
   export let data: PageData;
@@ -13,21 +12,19 @@
       <ArtworkCard {artwork} />
     {/each}
   </div>
-  <div >
-    <form method="GET" class="mt-10 flex items-center justify-start space-x-10">
-      <button
-        class="btn variant-ghost-secondary"
-        disabled={!data.page.previous}
-        type="submit"
-        formaction="./{data.page.page - 1}">Previous</button
-      >
+  <form method="GET" class="mt-10 flex items-center justify-start space-x-10">
+    <button
+      class="btn variant-ghost-secondary"
+      disabled={!data.page.previous}
+      type="submit"
+      formaction="./{data.page.page - 1}">Previous</button
+    >
 
-      <button
-        class="btn variant-ghost-secondary"
-        disabled={!data.page.next}
-        type="submit"
-        formaction="./{data.page.page + 1}">Next</button
-      >
-    </form>
-  </div>
+    <button
+      class="btn variant-ghost-secondary"
+      disabled={!data.page.next}
+      type="submit"
+      formaction="./{data.page.page + 1}">Next</button
+    >
+  </form>
 </div>

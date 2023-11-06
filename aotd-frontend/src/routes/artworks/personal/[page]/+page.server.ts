@@ -1,14 +1,12 @@
-import { PrivateArtworkApi } from "$lib/server/apis/personal-artwork-api";
-import type { Actions } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
+import { ArtworkApi } from "$lib/server/apis/artwork-api";
 import type { Artwork } from "$lib/types/artwork";
 
 
 export const load = async ({ cookies, params }) => {
     const page: number = parseInt(params.page);
 
-    const privateArtworkApi = new PrivateArtworkApi(cookies);
-    const pageResponse = await privateArtworkApi.getArtworksPage(page);
+    const artworkApi = new ArtworkApi(cookies);
+    const pageResponse = await artworkApi.getPersonalArtworksPage(page);
     const artworks = pageResponse.results as Artwork[];
 
     return {

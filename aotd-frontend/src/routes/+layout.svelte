@@ -58,23 +58,4 @@
   </svelte:fragment>
   <!-- Page Route Content -->
   <slot />
-  <svelte:fragment slot="footer">
-    <AppBar class="items-center">
-      <a
-        class="btn btn-sm variant-ghost-surface"
-        href="https://github.com/Kangonaut/ai-artwork-of-the-day"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <box-icon
-          class="mr-1"
-          type="logo"
-          size="sm"
-          name="github"
-          color="white"
-        />
-        GitHub
-      </a>
-    </AppBar>
-  </svelte:fragment>
 </AppShell>
