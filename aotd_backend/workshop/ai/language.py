@@ -45,7 +45,7 @@ class _LanguageAi:
 
     @staticmethod
     def __extract_content_in_quotes(text: str) -> str:
-        return re.findall("['\"]([^'\"]+)['\"]", text)[0]
+        return re.findall("^[\"'](.+)[\"']$", text)[0]
 
     def generate_artwork_description(self, data: dict[str, any]) -> str:
         example_prompt = ChatPromptTemplate.from_messages([
@@ -59,8 +59,8 @@ class _LanguageAi:
         )
 
         final_prompt = ChatPromptTemplate.from_messages([
-            ("system", """Please generate a prompt (in quotes) for an image generation AI that visualizes the provided data 
-            (in JSON format)."""),
+            ("system",
+             """Please generate a prompt (in quotes) for an image generation AI that visualizes the provided data (in JSON format)."""),
             few_shot_prompt,
             ("human", "data: {data}"),
             ("ai", "image prompt: ")
@@ -68,6 +68,8 @@ class _LanguageAi:
 
         chain = final_prompt | self.__language_model | StrOutputParser()
         response = chain.invoke({"data": data})
+
+        print(f"response: {response}")
 
         return self.__extract_content_in_quotes(response)
 
