@@ -25,6 +25,7 @@
   <svelte:fragment slot="header">
     <!-- App Bar -->
     <AppBar
+      background="bg-transparent"
       gridColumns="grid-cols-3"
       slotDefault="place-self-center"
       slotTrail="place-content-end"
