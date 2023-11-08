@@ -61,10 +61,10 @@
               <span>Django</span>
             </div>
           </a>
-          <a class="logo-item bg-transparent p-10" href="https://openai.com/">
+          <a class="logo-item bg-transparent p-10" href="https://python.langchain.com/docs/get_started/introduction">
             <div>
               <box-icon size="md" name="bot" color="white" />
-              <span>OpenAI</span>
+              <span>LangChain</span>
             </div>
           </a>
         </div>
