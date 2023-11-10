@@ -38,7 +38,7 @@ export class AuthApi {
             this._authCookies.accessToken = loginResponse.access;
 
             // redirect to root
-            throw redirect(302, "/user");
+            throw redirect(302, "/account");
         }
         else {
             const errorReponse: ErrorResponse = (responseData as ErrorResponse);
