@@ -10,6 +10,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5",
     "@skeletonlabs/skeleton": "2.3.0",
     "@skeletonlabs/tw-plugin": "0.2.2",
     "@sveltejs/adapter-auto": "^2.0.0",

@@ -46,11 +46,7 @@
 
       <svelte:fragment slot="trail">
         {#if $page.data.user}
-          <form action="/api/auth/logout" method="POST">
-            <button type="submit" class="btn btn-md variant-ghost-error"
-              >Logout</button
-            >
-          </form>
+          <NavButton title={$page.data.user.username} pathname="/user" />
         {:else}
           <NavButton title="Login" pathname="/auth/login" />
         {/if}
