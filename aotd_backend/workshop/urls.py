@@ -11,6 +11,7 @@ router.register('open-weather-settings', views.OpenWeatherSettingsViewSet)
 router.register('caldav-settings', views.CalDavSettingsViewSet)
 
 router.register('artworks', views.ArtworkViewSet, basename='artwork')
+router.register('art-styles', views.ArtStyleViewSet, basename="art-style")
 
 urlpatterns = [
     path('hello-world/', views.hello_world),

@@ -115,7 +115,7 @@ class ArtStyle(models.Model):
         null=False,
         unique=True,
     )
-    user = models.ManyToManyField(
+    user_set = models.ManyToManyField(
         CustomUser,
     )
 

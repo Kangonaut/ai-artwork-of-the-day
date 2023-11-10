@@ -30,3 +30,9 @@ class ArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Artwork
         fields = ['id', 'title', 'created_at', 'data', 'image_prompt']
+
+
+class ArtStyleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ArtStyle
+        fields = ["id", "name"]

@@ -170,3 +170,13 @@ class PersonalArtworksView(generics.ListAPIView):
         return models.Artwork.objects.filter(
             user=self.request.user,
         ).order_by('-created_at')
+
+
+# list view for available art styles
+
+class ArtStyleViewSet(
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin
+):
+    queryset = models.ArtStyle.objects.all()
+    serializer_class = serializers.ArtStyleSerializer
