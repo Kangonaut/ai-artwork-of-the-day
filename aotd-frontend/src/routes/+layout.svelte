@@ -17,7 +17,7 @@
   import NavButton from "$lib/components/NavButton.svelte";
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-  // export let data: LayoutData;
+  import "iconify-icon";
 </script>
 
 <!-- App Shell -->
@@ -46,7 +46,7 @@
 
       <svelte:fragment slot="trail">
         {#if $page.data.user}
-          <NavButton title={$page.data.user.username} pathname="/user" />
+          <NavButton title={$page.data.user.username} pathname="/account" />
         {:else}
           <NavButton title="Login" pathname="/auth/login" />
         {/if}

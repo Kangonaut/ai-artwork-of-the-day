@@ -1,13 +1,11 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
   import { page } from "$app/stores";
   import AccountActionCard from "$lib/components/AccountActionCard.svelte";
-
-  export let data: PageData;
+  import SettingsItemCard from "$lib/components/SettingsItemCard.svelte";
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
-  <div class="space-y-10 text-center flex flex-col items-center w-8/12">
+  <div class="space-y-10 text-center flex flex-col items-center p-10 w-8/12">
     <h1 class="h1">
       <span>Welcome</span>
       <span
@@ -16,6 +14,55 @@
       >
       <span>!</span>
     </h1>
+    <div class="grid grid-cols-1 gap-5 text-start w-full">
+      <h2 class="h2">General</h2>
+      <SettingsItemCard
+        title="User"
+        icon="solar:user-bold"
+        description="Let your artworks be dependent on your current time of day."
+        url="/account/settings/data-sources/daytime"
+      />
+    </div>
+    <div class="grid grid-cols-1 gap-5 text-start w-full">
+      <h2 class="h2">Data Sources</h2>
+      <SettingsItemCard
+        title="Daytime"
+        icon="solar:clock-circle-broken"
+        description="Let your artworks be dependent on your current time of day."
+        url="/account/settings/data-sources/daytime"
+      />
+      <hr />
+      <SettingsItemCard
+        title="Art Stlye"
+        icon="solar:pallete-2-line-duotone"
+        description="Explore different art styles everyday!"
+        url="/account/settings/data-sources/daytime"
+      />
+      <hr />
+      <SettingsItemCard
+        title="Weather"
+        icon="solar:cloud-sun-2-bold-duotone"
+        description="What's the weather like today? From now on, you don't have to go outside to find out."
+        url="/account/settings/data-sources/daytime"
+      />
+      <hr />
+      <SettingsItemCard
+        title="CalDav"
+        icon="solar:calendar-linear"
+        description="What do you have planned today? Are you going on a hike or planning a cycling tour? Further personalize your artworks using your calendar."
+        url="/account/settings/data-sources/daytime"
+      />
+    </div>
+    <div class="grid grid-cols-1 gap-5 text-start w-full">
+      <h2 class="h2">Delivery Services</h2>
+      <hr />
+      <SettingsItemCard
+        title="Pushover"
+        icon="tabler:brand-pushover"
+        description="A convenient way to receive your daily artwork via push-notifications."
+        url="/account/settings/delivery-services/pushover"
+      />
+    </div>
     <div class="grid grid-cols-1 gap-5 text-start w-full">
       <h2 class="h2">Actions</h2>
       <AccountActionCard
@@ -31,16 +78,6 @@
         btnContent="Delete Account"
         btnAction="/api/auth/logout"
       />
-    </div>
-    <div class="grid grid-cols-1 gap-5 text-start w-full">
-      <h2 class="h2">Data Sources</h2>
-      <hr />
-      <hr />
-    </div>
-    <div class="grid grid-cols-1 gap-5 text-start w-full">
-      <h2 class="h2">Delivery Services</h2>
-      <hr />
-      <hr />
     </div>
   </div>
 </div>
