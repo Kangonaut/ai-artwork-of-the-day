@@ -2,12 +2,10 @@
   import type { PublicArtwork } from "../types/artwork";
 
   export let artwork: PublicArtwork;
-
-  let imageId = Math.floor(Math.random() * 100) + 1;
 </script>
 
 <a
-  class="max-w-sm rounded-lg overflow-hidden shadow-md variant-ghost-primary card-hover"
+  class="max-w-sm rounded-lg overflow-hidden shadow-md variant-ghost-primary card-hover flex flex-col"
   href="/public/artwork/{artwork.id}"
 >
   <img
@@ -15,7 +13,10 @@
     src="/api/public/artwork/{artwork.id}/image"
     alt="AI generated artwork"
   />
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">{artwork.title}</div>
+  <div class="flex flex-col h-full p-5">
+    <div class="font-normal text-xl">{artwork.title}</div>
+    <div class="mt-auto text-lg font-bold text-right">
+      @{artwork.user.username}
+    </div>
   </div>
 </a>

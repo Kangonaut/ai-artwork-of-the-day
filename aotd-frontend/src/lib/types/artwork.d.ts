@@ -1,3 +1,5 @@
+import type { UserData } from "./user";
+
 export interface PrivateArtwork {
     id: number;
     title: string;
@@ -11,4 +13,5 @@ export interface PublicArtwork {
     id: number;
     title: string;
     created_at: string;
+    user: UserData;
 }

@@ -7,7 +7,7 @@
 </script>
 
 <a
-  class="max-w-sm rounded-lg overflow-hidden shadow-md variant-ghost-primary card-hover"
+  class="max-w-sm rounded-lg overflow-hidden shadow-md variant-ghost-primary card-hover flex flex-col"
   href="/private/artwork/{artwork.id}"
 >
   <img
@@ -15,7 +15,7 @@
     src="/api/private/artwork/{artwork.id}/image"
     alt="AI generated artwork"
   />
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">{artwork.title}</div>
+  <div class="flex flex-col h-full p-5">
+    <div class="font-normal text-xl">{artwork.title}</div>
   </div>
 </a>
