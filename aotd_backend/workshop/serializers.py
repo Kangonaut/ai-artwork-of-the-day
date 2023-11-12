@@ -32,10 +32,16 @@ class DaytimeSettingsSerializer(serializers.ModelSerializer):
         fields = ['timezone_hour_offset']
 
 
-class ArtworkSerializer(serializers.ModelSerializer):
+class PrivateArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Artwork
         fields = ['id', 'title', 'created_at', 'data', 'image_prompt', 'is_public']
+
+
+class PublicArtworkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Artwork
+        fields = ['id', 'title', 'created_at', 'user_id']
 
 
 class ArtStyleSerializer(serializers.ModelSerializer):

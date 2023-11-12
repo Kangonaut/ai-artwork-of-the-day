@@ -12,12 +12,12 @@ router.register('caldav-settings', views.CalDavSettingsViewSet)
 router.register('daytime-settings', views.DaytimeSettingsViewSet)
 router.register('art-style-settings', views.ArtStyleSettingsViewSet, basename="art-style-settings")
 
-router.register('artworks', views.ArtworkViewSet, basename='artwork')
+router.register('private-artworks', views.PrivateArtworkViewSet, basename='artwork')
+router.register('public-artworks', views.PublicArtworksViewSet, basename='artwork')
 router.register('art-styles', views.ArtStyleViewSet, basename="art-style")
 
 urlpatterns = [
     path('hello-world/', views.hello_world),
     path('issue-artwork/', views.issue_artwork),
-    path('artworks/me', views.PersonalArtworksView.as_view()),
     path('', include(router.urls)),
 ]

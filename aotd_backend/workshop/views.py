@@ -137,20 +137,25 @@ class DaytimeSettingsViewSet(AbstractSettingsViewSet):
     queryset = models.DaytimeSettings.objects.all()
 
 
-class ArtworkViewSet(
+class PrivateArtworkViewSet(
     viewsets.GenericViewSet,
     mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
 ):
-    serializer_class = serializers.ArtworkSerializer
-    queryset = models.Artwork.objects.all()
+    serializer_class = serializers.PrivateArtworkSerializer
     permission_classes = [IsAuthenticated, permissions.IsOwner]
+
+    def get_queryset(self):
+        return models.Artwork.objects.filter(
+            user=self.request.user,
+        ).order_by('-created_at')
 
     @action(detail=True, methods=['GET'])
     def image(self, request: Request, pk: int):
         artwork = self.get_queryset().get(pk=pk)
         return http.HttpResponse(artwork.image.file, content_type="image/png")
 
-    @action(detail="True", methods=["PUT"])
+    @action(detail=True, methods=["PUT"])
     def publish(self, request: Request, pk: int):
         # deserialize request data
         serializer = serializers.PublishArtworkSerializer(data=request.data)
@@ -161,22 +166,31 @@ class ArtworkViewSet(
         artwork = models.Artwork.objects.get(pk=pk)
 
         # set visibility
-        print()
         artwork.is_public = is_public
         artwork.save()
 
         # serialize artwork
-        artwork_serializer = serializers.ArtworkSerializer(instance=artwork)
+        artwork_serializer = serializers.PrivateArtworkSerializer(instance=artwork)
         return Response(artwork_serializer.data)
 
 
-class PersonalArtworksView(generics.ListAPIView):
-    serializer_class = serializers.ArtworkSerializer
+class PublicArtworksViewSet(
+    viewsets.GenericViewSet,
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+):
+    serializer_class = serializers.PublicArtworkSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return models.Artwork.objects.filter(
-            user=self.request.user,
+            is_public=True,
         ).order_by('-created_at')
+
+    @action(detail=True, methods=['GET'])
+    def image(self, request: Request, pk: int):
+        artwork = self.get_queryset().get(pk=pk)
+        return http.HttpResponse(artwork.image.file, content_type="image/png")
 
 
 # list view for available art styles
