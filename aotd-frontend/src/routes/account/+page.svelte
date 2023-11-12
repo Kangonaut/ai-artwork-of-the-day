@@ -68,6 +68,7 @@
         icon="tabler:brand-pushover"
         description="A convenient way to receive your daily artwork via push-notifications."
         url="/account/settings/delivery-services/pushover"
+        isEnabled={data.isPushoverEnabled}
       />
     </div>
     <div class="grid grid-cols-1 gap-5 text-start w-full">

@@ -1,4 +1,5 @@
 import { ArtstyleSettingsApi as ArtStyleSettingsApi } from '$lib/server/apis/art-style-settings-api';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ cookies }) => {
     const settingsApi = new ArtStyleSettingsApi(cookies);
@@ -21,6 +22,8 @@ export const actions = {
         } as ArtStyleSettings;
 
         await settingsApi.update(settings);
+
+        throw redirect(302, "/account");
     },
     disable: async ({ cookies }) => {
         const settingsApi = new ArtStyleSettingsApi(cookies);
@@ -30,5 +33,7 @@ export const actions = {
         }
 
         await settingsApi.update(settings);
+
+        throw redirect(302, "/account");
     }
 }

@@ -22,3 +22,7 @@ interface ArtStyle {
     id: number;
     name: string;
 }
+
+interface PushoverSettings {
+    user_key: string;
+}

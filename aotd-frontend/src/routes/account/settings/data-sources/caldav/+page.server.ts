@@ -1,4 +1,5 @@
 import { CalDavSettingsApi } from '$lib/server/apis/caldav-settings-api';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ cookies }) => {
     const settingsApi = new CalDavSettingsApi(cookies);
@@ -36,9 +37,13 @@ export const actions = {
             await settingsApi.create(settings);
         else
             await settingsApi.update(settings);
+
+        throw redirect(302, "/account");
     },
     disable: async ({ cookies }) => {
         const settingsApi = new CalDavSettingsApi(cookies);
         await settingsApi.delete();
+
+        throw redirect(302, "/account");
     }
 }

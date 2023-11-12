@@ -20,7 +20,7 @@
     </label>
     <label class="label">
         <span>Username</span>
-        <input class="input" required name="username" type="text" value={data.settings?.username}/>
+        <input class="input" required name="username" type="text" value={data.settings?.username ?? ""}/>
     </label>
     <label class="label">
         <span>Password</span>
