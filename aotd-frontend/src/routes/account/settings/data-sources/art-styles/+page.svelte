@@ -2,6 +2,11 @@
   import type { PageData } from "./$types";
 
   export let data: PageData;
+
+  const checkAll = () => {
+    const inputs = document.getElementsByName("artStyles");
+    inputs.forEach(input => (input as HTMLInputElement).checked = true);
+  }
 </script>
 
 <h2 class="h2">Art Styles Data Source Settings</h2>
@@ -23,7 +28,8 @@
       </label>
     {/each}
   </div>
-  <button class="btn variant-ghost-primary m-auto">apply</button>
+  <button class="btn variant-ghost-surface m-auto" on:click={checkAll}>select all</button>
+  <button class="btn variant-ghost-primary m-auto" type="submit">apply</button>
   <button class="btn variant-ghost-error m-auto" formaction="?/disable"
     >disable</button
   >

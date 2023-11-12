@@ -37,10 +37,11 @@
       />
       <hr />
       <SettingsItemCard
-        title="Art Stlye"
+        title="Art Stlyes"
         icon="solar:pallete-2-line-duotone"
         description="Explore different art styles everyday!"
         url="/account/settings/data-sources/art-styles"
+        isEnabled={data.isArtStylesEnabled}
       />
       <hr />
       <SettingsItemCard
