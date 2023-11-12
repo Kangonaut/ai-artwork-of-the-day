@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from . import models
+from users.serializers import CustomUserSerializer
 
 
 class UserSettingsSerializer(serializers.ModelSerializer):
@@ -41,7 +42,9 @@ class PrivateArtworkSerializer(serializers.ModelSerializer):
 class PublicArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Artwork
-        fields = ['id', 'title', 'created_at', 'user_id']
+        fields = ['id', 'title', 'created_at', 'user_id', 'user']
+
+    user = CustomUserSerializer()
 
 
 class ArtStyleSerializer(serializers.ModelSerializer):
