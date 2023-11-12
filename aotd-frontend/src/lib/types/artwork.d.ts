@@ -4,4 +4,5 @@ export interface Artwork {
     created_at: string;
     data: object;
     image_prompt: string;
+    is_public: boolean;
 }

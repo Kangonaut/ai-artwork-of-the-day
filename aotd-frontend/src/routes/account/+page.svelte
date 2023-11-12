@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import AccountActionCard from "$lib/components/AccountActionCard.svelte";
   import SettingsItemCard from "$lib/components/SettingsItemCard.svelte";
-    import type { PageData } from "./$types";
+  import type { PageData } from "./$types";
 
   export let data: PageData;
 </script>
@@ -17,16 +17,19 @@
       >
       <span>!</span>
     </h1>
-    <div class="grid grid-cols-1 gap-5 text-start w-full">
+
+    <!-- User Settings -->
+    <!-- <div class="grid grid-cols-1 gap-5 text-start w-full">
       <h2 class="h2">General</h2>
       <SettingsItemCard
-        title="User"
+        title="Account"
         icon="solar:user-bold"
-        description="Let your artworks be dependent on your current time of day."
-        url="/account/settings/data-sources/daytime"
+        description="TODO: description"
+        url="/account/settings"
         isEnabled={true}
       />
-    </div>
+    </div> -->
+
     <div class="grid grid-cols-1 gap-5 text-start w-full">
       <h2 class="h2">Data Sources</h2>
       <SettingsItemCard
@@ -80,6 +83,8 @@
         btnContent="Logout"
         btnAction="/api/auth/logout"
       />
+
+      <!-- Delete Account Action -->
       <!-- <hr />
       <AccountActionCard
         title="Delete Account"

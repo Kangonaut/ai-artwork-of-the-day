@@ -10,3 +10,18 @@ export const load = async ({ cookies, params }) => {
         artwork: artwork,
     };
 };
+
+export const actions = {
+    publish: async ({ cookies, params }) => {
+        const artworkApi = new ArtworkApi(cookies);
+
+        const id = Number(params.id);
+        await artworkApi.setArtworkVisibility(id, true);
+    },
+    hide: async ({ cookies, params }) => {
+        const artworkApi = new ArtworkApi(cookies);
+
+        const id = Number(params.id);
+        await artworkApi.setArtworkVisibility(id, false);
+    },
+};

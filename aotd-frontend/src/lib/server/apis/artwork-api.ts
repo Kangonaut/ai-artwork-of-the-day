@@ -28,4 +28,10 @@ export class ArtworkApi {
     public async getArtwork(id: number): Promise<Artwork> {
         return (await this._privateApi.get(`${API_BASE_URL}/workshop/artworks/${id}`)) as Artwork;
     }
+
+    public async setArtworkVisibility(id: number, isPublic: boolean): Promise<Artwork> {
+        return (await this._privateApi.put(`${API_BASE_URL}/workshop/artworks/${id}/publish/`, {
+            publish: isPublic,
+        })) as Artwork;
+    }
 }
