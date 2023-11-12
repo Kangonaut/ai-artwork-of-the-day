@@ -1,4 +1,4 @@
-import { DaytimeSettingsApi } from '$lib/server/apis/daytime-settings-api.js';
+import { DaytimeSettingsApi } from '$lib/server/apis/daytime-settings-api';
 
 export const load = async ({ cookies }) => {
     const settingsApi = new DaytimeSettingsApi(cookies);

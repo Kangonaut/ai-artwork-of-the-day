@@ -13,3 +13,12 @@ interface CalDavSettings {
     username: string,
     password: string,
 }
+
+interface ArtStyleSettings {
+    art_styles: number[];
+}
+
+interface ArtStyle {
+    id: number;
+    name: string;
+}

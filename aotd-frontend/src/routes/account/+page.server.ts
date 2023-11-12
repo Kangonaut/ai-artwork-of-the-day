@@ -1,6 +1,6 @@
-import { CalDavSettingsApi } from '$lib/server/apis/caldav-settings-api.js';
-import { DaytimeSettingsApi } from '$lib/server/apis/daytime-settings-api.js';
-import { WeatherSettingsApi } from '$lib/server/apis/weather-settings-api.js';
+import { CalDavSettingsApi } from '$lib/server/apis/caldav-settings-api';
+import { DaytimeSettingsApi } from '$lib/server/apis/daytime-settings-api';
+import { WeatherSettingsApi } from '$lib/server/apis/weather-settings-api';
 
 export const load = async ({ cookies }) => {
     const daytimeSettingsApi = new DaytimeSettingsApi(cookies);

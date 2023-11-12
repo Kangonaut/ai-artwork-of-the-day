@@ -1,4 +1,4 @@
-import { WeatherSettingsApi } from '$lib/server/apis/weather-settings-api.js';
+import { WeatherSettingsApi } from '$lib/server/apis/weather-settings-api';
 
 export const load = async ({ cookies }) => {
     const settingsApi = new WeatherSettingsApi(cookies);

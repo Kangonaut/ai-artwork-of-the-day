@@ -1,4 +1,4 @@
-import { CalDavSettingsApi } from '$lib/server/apis/caldav-settings-api.js';
+import { CalDavSettingsApi } from '$lib/server/apis/caldav-settings-api';
 
 export const load = async ({ cookies }) => {
     const settingsApi = new CalDavSettingsApi(cookies);

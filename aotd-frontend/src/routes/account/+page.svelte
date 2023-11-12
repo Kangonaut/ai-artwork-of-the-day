@@ -40,7 +40,7 @@
         title="Art Stlye"
         icon="solar:pallete-2-line-duotone"
         description="Explore different art styles everyday!"
-        url="/account/settings/data-sources/artstyle"
+        url="/account/settings/data-sources/art-styles"
       />
       <hr />
       <SettingsItemCard
