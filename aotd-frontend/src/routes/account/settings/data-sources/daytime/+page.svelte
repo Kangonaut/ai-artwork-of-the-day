@@ -11,7 +11,7 @@
 <form method="post" class="grid grid-cols-1 gap-10" action="?/apply">
     <input type="hidden" name="isNew" value={data.settings == null}/>
     <label class="label">
-        <span>Timezone Offset:</span>
+        <span>Timezone Offset</span>
         <input class="input" required name="timezoneHourOffset" type="number" step="0.25" min="-12" max="14" value={data.settings?.timezone_hour_offset}/>
     </label>
     <button class="btn variant-ghost-primary m-auto">apply</button>

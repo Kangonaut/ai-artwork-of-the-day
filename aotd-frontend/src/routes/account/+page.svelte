@@ -56,6 +56,7 @@
         icon="solar:calendar-linear"
         description="What do you have planned today? Are you going on a hike or planning a cycling tour? Further personalize your artworks using your calendar."
         url="/account/settings/data-sources/caldav"
+        isEnabled={data.isCalDavEnabled}
       />
     </div>
     <div class="grid grid-cols-1 gap-5 text-start w-full">
