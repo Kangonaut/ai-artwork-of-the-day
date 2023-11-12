@@ -17,13 +17,19 @@ class PushoverSettingsSerializer(serializers.ModelSerializer):
 class OpenWeatherSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OpenWeatherSettings
-        fields = ['lat', 'lon']
+        fields = ['latitude', 'longitude']
 
 
 class CalDavSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CalDavSettings
         fields = ['caldav_url', 'calendar_url', 'username', 'password']
+
+
+class DaytimeSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.DaytimeSettings
+        fields = ['timezone_hour_offset']
 
 
 class ArtworkSerializer(serializers.ModelSerializer):

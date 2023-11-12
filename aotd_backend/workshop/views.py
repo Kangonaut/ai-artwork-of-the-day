@@ -127,18 +127,10 @@ class CalDavSettingsViewSet(AbstractSettingsViewSet):
     queryset = models.CalDavSettings.objects.all()
 
 
-# class PrivateArtworkViewSet(
-#     viewsets.GenericViewSet,
-#     mixins.RetrieveModelMixin,
-#     mixins.ListModelMixin,
-# ):
-#     serializer_class = serializers.ArtworkSerializer
-#     permission_classes = [IsAuthenticated]
-#
-#     def get_queryset(self):
-#         return models.Artwork.objects.filter(
-#             user=self.request.user,
-#         ).order_by('-created_at')
+class DaytimeSettingsViewSet(AbstractSettingsViewSet):
+    settings_model = models.DaytimeSettings
+    serializer_class = serializers.DaytimeSettingsSerializer
+    queryset = models.DaytimeSettings.objects.all()
 
 
 class ArtworkViewSet(

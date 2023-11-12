@@ -96,7 +96,7 @@ class OpenWeatherSettings(models.Model):
     )
 
 
-class DayTimeSettings(models.Model):
+class DaytimeSettings(models.Model):
     user = models.OneToOneField(
         CustomUser,
         primary_key=True,

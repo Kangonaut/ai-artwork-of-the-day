@@ -173,7 +173,7 @@ class OpenWeatherDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
 
 
 class DaytimeDataSourceConfigurator(AbstractDatabaseDataSourceConfigurator):
-    settings_model: Type[django.db.models.Model] = models.DayTimeSettings
+    settings_model: Type[django.db.models.Model] = models.DaytimeSettings
     data_source: Type[AbstractDataSource] = DaytimeDataSource
 
 
