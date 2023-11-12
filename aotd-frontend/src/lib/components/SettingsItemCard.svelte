@@ -3,11 +3,16 @@
   export let title: string;
   export let description: string;
   export let url: string;
+  export let isEnabled: boolean;
 </script>
 
 <div class="flex p-5">
   <div
-    class="badge-icon bg-secondary-800 text-secondary-300 w-fit h-fit p-3 m-auto mr-5"
+    class:bg-success-800={isEnabled}
+    class:text-success-300={isEnabled}
+    class:bg-error-800={!isEnabled}
+    class:text-error-300={!isEnabled}
+    class="badge-icon w-fit h-fit p-3 m-auto mr-5"
   >
     <iconify-icon class="text-2xl" {icon} />
   </div>

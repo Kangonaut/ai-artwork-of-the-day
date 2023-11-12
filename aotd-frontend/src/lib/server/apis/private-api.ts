@@ -11,7 +11,7 @@ export class PrivateApi {
         this._authApi = new AuthApi(this._cookies);
     }
 
-    private async _fetch(url: string, init: RequestInit): Promise<never | object> {
+    private async _getAccessToken(): Promise<string> {
         // check if accessToken cookie expired
         let accessToken = this._authCookies.accessToken;
         if (!accessToken) {
@@ -19,36 +19,55 @@ export class PrivateApi {
             await this._authApi.refresh();
 
             // acquire new access token
-            accessToken = this._authCookies.accessToken;
+            accessToken = this._authCookies.accessToken!;
         }
+        return accessToken;
+    }
 
-        // set headers
-        init.headers = {
+    private _getHeaders(accessToken: string): HeadersInit {
+        return {
             "Authorization": `JWT ${accessToken}`,
             "Content-Type": "application/json",
         };
+    }
+
+    private async handleResponse(response: Response): Promise<Response | never> {
+        if (response.ok)
+            return response;
+        else {
+            const responseData = await response.json();
+            if (response.status === 401) {
+                console.warn(`unauthorized error: ${JSON.stringify(responseData)}`);
+
+                // logout to invalidate session
+                await this._authApi.logout();
+
+                console.error("this should never happen!");
+                throw new Error("this should never happen!"); // to shut up type checking
+            } else {
+                const errorResponse = responseData as ErrorResponse;
+                throw error(response.status, {
+                    message: errorResponse.detail,
+                });
+            }
+        }
+    }
+
+    private async _fetch(url: string, init: RequestInit): Promise<never | object> {
+        // get access token
+        const accessToken = await this._getAccessToken();
+
+        // set headers
+        init.headers = this._getHeaders(accessToken);
 
         // make request
-        const response = await fetch(url, init);
+        let response = await fetch(url, init);
 
         // handle response
-        const responseData = await response.json();
-        if (response.ok)
-            return responseData;
-        else if (response.status === 401) {
-            console.warn(`unauthorized error: ${JSON.stringify(responseData)}`);
+        response = await this.handleResponse(response);
 
-            // logout to invalidate session
-            await this._authApi.logout();
-
-            console.error("this should never happen!");
-            throw new Error("this should never happen!"); // to shut up type checking
-        } else {
-            const errorResponse = responseData as ErrorResponse;
-            throw error(response.status, {
-                message: errorResponse.detail,
-            });
-        }
+        // return result
+        return await response.json();
     }
 
     public async get(url: string): Promise<object> {
@@ -58,27 +77,25 @@ export class PrivateApi {
     }
 
     public async getImage(url: string): Promise<Blob> {
-        let accessToken = this._authCookies.accessToken;
-        if (!accessToken) {
-            // perform refresh
-            await this._authApi.refresh();
+        // get access token
+        const accessToken = await this._getAccessToken();
 
-            // acquire new access token
-            accessToken = this._authCookies.accessToken;
-        }
-
-        const init: RequestInit = {};
-
-        // set headers
-        init.headers = {
-            "Authorization": `JWT ${accessToken}`,
-            "Content-Type": "application/json",
+        // set method
+        const init: RequestInit = {
+            method: "GET",
         };
 
-        // make request
-        const response: Response = await fetch(url, init);
+        // set headers
+        init.headers = this._getHeaders(accessToken);
 
-        return response.blob();
+        // make request
+        let response: Response = await fetch(url, init);
+
+        // handle response
+        response = await this.handleResponse(response);
+
+        // return result
+        return await response.blob();
     }
 
     public async post(url: string, body: object): Promise<object> {
@@ -95,9 +112,22 @@ export class PrivateApi {
         });
     }
 
-    public async delete(url: string): Promise<object> {
-        return await this._fetch(url, {
+    public async delete(url: string): Promise<void> {
+        // get access token
+        const accessToken = await this._getAccessToken();
+
+        // set method
+        const init: RequestInit = {
             method: "DELETE",
-        });
+        };
+
+        // set headers
+        init.headers = this._getHeaders(accessToken);
+
+        // make request
+        let response = await fetch(url, init);
+
+        // handle response
+        await this.handleResponse(response);
     }
 }

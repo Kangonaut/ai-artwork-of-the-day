@@ -40,13 +40,13 @@
         <NavButton
           title="My Artworks"
           pathname="/artworks/personal"
-          pattern="^/artworks/personal/\d"
+          pattern="^/artworks/personal/\d+"
         />
       </div>
 
       <svelte:fragment slot="trail">
         {#if $page.data.user}
-          <NavButton title={$page.data.user.username} pathname="/account" />
+          <NavButton title={$page.data.user.username} pathname="/account" pattern="/account.*"/>
         {:else}
           <NavButton title="Login" pathname="/auth/login" />
         {/if}
