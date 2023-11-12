@@ -1,8 +1,8 @@
-import { ArtworkApi } from "$lib/server/apis/artwork-api";
+import { PrivateArtworkApi } from "$lib/server/apis/private-artwork-api";
 import type { RequestHandler } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({ cookies, params }) => {
-    const artworkApi = new ArtworkApi(cookies);
+    const artworkApi = new PrivateArtworkApi(cookies);
     const id = (params as any).id as number;
     const image = await artworkApi.getArtworkImage(id);
 

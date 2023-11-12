@@ -2,5 +2,5 @@ import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({}) => {
-    throw redirect(301, "/artworks/personal/0");
+    throw redirect(301, "/private/artworks/0");
 };

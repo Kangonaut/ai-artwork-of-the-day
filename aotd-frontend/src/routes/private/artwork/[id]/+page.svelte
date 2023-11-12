@@ -29,7 +29,7 @@ import type { PageData } from "./$types";
 
     <img
       class="object-cover rounded-xl max-w-2xl w-full"
-      src="/api/artwork/{data.artwork.id}/image"
+      src="/api/private/artwork/{data.artwork.id}/image"
       alt="Sunset in the mountains"
     />
   </div>

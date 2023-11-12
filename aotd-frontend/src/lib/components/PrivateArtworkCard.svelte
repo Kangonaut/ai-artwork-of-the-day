@@ -1,18 +1,18 @@
 <script lang="ts">
-  import type { Artwork } from "$lib/types/artwork";
+  import type { PrivateArtwork } from "../types/artwork";
 
-  export let artwork: Artwork;
+  export let artwork: PrivateArtwork;
 
   let imageId = Math.floor(Math.random() * 100) + 1;
 </script>
 
 <a
   class="max-w-sm rounded-lg overflow-hidden shadow-md variant-ghost-primary card-hover"
-  href="/artwork/{artwork.id}"
+  href="/private/artwork/{artwork.id}"
 >
   <img
     class="p-0.5 w-full object-cover rounded-lg"
-    src="/api/artwork/{artwork.id}/image"
+    src="/api/private/artwork/{artwork.id}/image"
     alt="AI generated artwork"
   />
   <div class="px-6 py-4">

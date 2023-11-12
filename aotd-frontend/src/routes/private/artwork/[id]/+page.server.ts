@@ -1,9 +1,9 @@
-import { ArtworkApi } from "$lib/server/apis/artwork-api";
+import { PrivateArtworkApi } from "$lib/server/apis/private-artwork-api";
 
 export const load = async ({ cookies, params }) => {
     const id = Number(params.id);
 
-    const artworkApi = new ArtworkApi(cookies);
+    const artworkApi = new PrivateArtworkApi(cookies);
     const artwork = await artworkApi.getArtwork(id);
 
     return {
@@ -13,13 +13,13 @@ export const load = async ({ cookies, params }) => {
 
 export const actions = {
     publish: async ({ cookies, params }) => {
-        const artworkApi = new ArtworkApi(cookies);
+        const artworkApi = new PrivateArtworkApi(cookies);
 
         const id = Number(params.id);
         await artworkApi.setArtworkVisibility(id, true);
     },
     hide: async ({ cookies, params }) => {
-        const artworkApi = new ArtworkApi(cookies);
+        const artworkApi = new PrivateArtworkApi(cookies);
 
         const id = Number(params.id);
         await artworkApi.setArtworkVisibility(id, false);

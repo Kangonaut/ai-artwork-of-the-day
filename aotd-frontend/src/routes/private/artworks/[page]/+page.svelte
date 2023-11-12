@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ArtworkCard from "$lib/components/ArtworkCard.svelte";
+    import PrivateArtworkCard from "$lib/components/PrivateArtworkCard.svelte";
   import type { PageData } from "./$types";
 
   export let data: PageData;
@@ -9,7 +9,7 @@
 <div class="p-10 w-full">
   <div class="grid grid-cols-3 gap-10">
     {#each data.artworks as artwork (artwork.id)}
-      <ArtworkCard {artwork} />
+      <PrivateArtworkCard {artwork} />
     {/each}
   </div>
   <form method="GET" class="mt-10 flex items-center justify-start space-x-10">

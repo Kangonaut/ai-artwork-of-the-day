@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { enhance } from "$app/forms";
     import { UiVariant } from "$lib/types/ui";
 
   export let title: string;
