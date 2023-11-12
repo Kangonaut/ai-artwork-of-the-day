@@ -67,7 +67,7 @@ class AbstractSettingsViewSet(abc.ABC, viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
 
     # detail = False -> URL does not contain instance pk
-    @action(detail=False, methods=['GET', 'POST', 'PUT', 'DELETE'])
+    @action(detail=False, methods=['HEAD', 'GET', 'POST', 'PUT', 'DELETE'])
     def me(self, request: Request):
         user: models.CustomUser = request.user
         try:
@@ -75,8 +75,11 @@ class AbstractSettingsViewSet(abc.ABC, viewsets.GenericViewSet):
         except self.settings_model.DoesNotExist:
             settings = None
 
-        if request.method in ['GET', 'PUT', 'DELETE'] and settings is None:
+        if request.method in ['HEAD', 'GET', 'PUT', 'DELETE'] and settings is None:
             raise exceptions.NotFound(detail='does not exist for this user')
+
+        if request.method == 'HEAD':
+            return Response()
 
         if request.method == 'GET':
             serializer = self.serializer_class(instance=settings)

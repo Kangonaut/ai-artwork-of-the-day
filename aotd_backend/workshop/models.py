@@ -103,8 +103,8 @@ class DaytimeSettings(models.Model):
         on_delete=models.CASCADE
     )
     timezone_hour_offset = models.DecimalField(
-        max_digits=3,
-        decimal_places=1,
+        max_digits=4,
+        decimal_places=2,
         null=False,
     )
 
@@ -115,7 +115,7 @@ class ArtStyle(models.Model):
         null=False,
         unique=True,
     )
-    user_set = models.ManyToManyField(
+    users = models.ManyToManyField(
         CustomUser,
     )
 
