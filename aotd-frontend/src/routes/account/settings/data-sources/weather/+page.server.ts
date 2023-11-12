@@ -1,7 +1,7 @@
-import { DaytimeSettingsApi } from '$lib/server/apis/daytime-settings-api.js';
+import { WeatherSettingsApi } from '$lib/server/apis/weather-settings-api.js';
 
 export const load = async ({ cookies }) => {
-    const settingsApi = new DaytimeSettingsApi(cookies);
+    const settingsApi = new WeatherSettingsApi(cookies);
 
     try {
 
@@ -19,13 +19,14 @@ export const load = async ({ cookies }) => {
 
 export const actions = {
     apply: async ({ request, cookies }) => {
-        const settingsApi = new DaytimeSettingsApi(cookies);
+        const settingsApi = new WeatherSettingsApi(cookies);
 
         // get form data
         const formData = await request.formData();
         const settings = {
-            timezone_hour_offset: Number(formData.get("timezoneHourOffset")),
-        } as DaytimeSettings;
+            longitude: Number(formData.get("longitude")),
+            latitude: Number(formData.get("latitude")),
+        } as WeatherSettings;
 
         // check if settings already exist
         const isNew: boolean = JSON.parse(formData.get("isNew") as string);
@@ -35,7 +36,7 @@ export const actions = {
             await settingsApi.update(settings);
     },
     disable: async ({ cookies }) => {
-        const settingsApi = new DaytimeSettingsApi(cookies);
+        const settingsApi = new WeatherSettingsApi(cookies);
         await settingsApi.delete();
     }
 }

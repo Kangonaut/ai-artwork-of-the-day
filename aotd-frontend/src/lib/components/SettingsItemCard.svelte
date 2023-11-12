@@ -20,5 +20,10 @@
     <p class="text-left font-bold text-xl">{title}</p>
     <p>{description}</p>
   </div>
-  <a href={url} class="btn btn-md variant-ghost-error m-auto">configure</a>
+  <a
+    href={url}
+    class="btn btn-md m-auto"
+    class:variant-ghost-error={!isEnabled}
+    class:variant-ghost-success={isEnabled}>settings</a
+  >
 </div>

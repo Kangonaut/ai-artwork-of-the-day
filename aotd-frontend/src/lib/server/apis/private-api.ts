@@ -70,6 +70,25 @@ export class PrivateApi {
         return await response.json();
     }
 
+    public async head(url: string): Promise<Response> {
+        // get access token
+        const accessToken = await this._getAccessToken();
+
+        // set method
+        const init: RequestInit = {
+            method: "HEAD",
+        };
+
+        // set headers
+        init.headers = this._getHeaders(accessToken);
+
+        // make request
+        let response = await fetch(url, init);
+
+        // return result
+        return response;
+    }
+
     public async get(url: string): Promise<object> {
         return await this._fetch(url, {
             method: "GET",

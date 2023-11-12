@@ -2,6 +2,8 @@
   import { page } from "$app/stores";
   import AccountActionCard from "$lib/components/AccountActionCard.svelte";
   import SettingsItemCard from "$lib/components/SettingsItemCard.svelte";
+
+  export let data: PageData;
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
@@ -21,6 +23,7 @@
         icon="solar:user-bold"
         description="Let your artworks be dependent on your current time of day."
         url="/account/settings/data-sources/daytime"
+        isEnabled={true}
       />
     </div>
     <div class="grid grid-cols-1 gap-5 text-start w-full">
@@ -30,27 +33,29 @@
         icon="solar:clock-circle-broken"
         description="Let your artworks be dependent on your current time of day."
         url="/account/settings/data-sources/daytime"
+        isEnabled={data.isDaytimeEnabled}
       />
       <hr />
       <SettingsItemCard
         title="Art Stlye"
         icon="solar:pallete-2-line-duotone"
         description="Explore different art styles everyday!"
-        url="/account/settings/data-sources/daytime"
+        url="/account/settings/data-sources/artstyle"
       />
       <hr />
       <SettingsItemCard
         title="Weather"
         icon="solar:cloud-sun-2-bold-duotone"
         description="What's the weather like today? From now on, you don't have to go outside to find out."
-        url="/account/settings/data-sources/daytime"
+        url="/account/settings/data-sources/weather"
+        isEnabled={data.isWeatherEnabled}
       />
       <hr />
       <SettingsItemCard
         title="CalDav"
         icon="solar:calendar-linear"
         description="What do you have planned today? Are you going on a hike or planning a cycling tour? Further personalize your artworks using your calendar."
-        url="/account/settings/data-sources/daytime"
+        url="/account/settings/data-sources/caldav"
       />
     </div>
     <div class="grid grid-cols-1 gap-5 text-start w-full">

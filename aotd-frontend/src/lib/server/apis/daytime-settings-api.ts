@@ -9,6 +9,10 @@ export class DaytimeSettingsApi {
         this._privateApi = new PrivateApi(this._cookies);
     }
 
+    public async head(): Promise<Response> {
+        return await this._privateApi.head(`${API_BASE_URL}/workshop/daytime-settings/me/`);
+    }
+
     public async get(): Promise<DaytimeSettings> {
         return (await this._privateApi.get(`${API_BASE_URL}/workshop/daytime-settings/me/`) as DaytimeSettings);
     }
