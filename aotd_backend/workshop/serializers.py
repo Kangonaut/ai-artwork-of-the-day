@@ -35,10 +35,14 @@ class DaytimeSettingsSerializer(serializers.ModelSerializer):
 class ArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Artwork
-        fields = ['id', 'title', 'created_at', 'data', 'image_prompt']
+        fields = ['id', 'title', 'created_at', 'data', 'image_prompt', 'is_public']
 
 
 class ArtStyleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ArtStyle
         fields = ["id", "name"]
+
+
+class PublishArtworkSerializer(serializers.Serializer):
+    publish = serializers.BooleanField()

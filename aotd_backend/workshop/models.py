@@ -23,6 +23,7 @@ class Artwork(models.Model):
         null=False
     )
     image_prompt = models.CharField(max_length=1_000)
+    is_public = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ['user', 'created_at']

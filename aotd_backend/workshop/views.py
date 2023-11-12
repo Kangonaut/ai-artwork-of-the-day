@@ -145,18 +145,29 @@ class ArtworkViewSet(
     queryset = models.Artwork.objects.all()
     permission_classes = [IsAuthenticated, permissions.IsOwner]
 
-    @action(detail=False, methods=['GET'])
-    def me(self, request: Request):
-        queryset = models.Artwork.objects.filter(
-            user=self.request.user,
-        ).order_by('-created_at')
-        serializer = self.serializer_class(instance=queryset, many=True)
-        return Response(serializer.data)
-
     @action(detail=True, methods=['GET'])
     def image(self, request: Request, pk: int):
         artwork = self.get_queryset().get(pk=pk)
         return http.HttpResponse(artwork.image.file, content_type="image/png")
+
+    @action(detail="True", methods=["PUT"])
+    def publish(self, request: Request, pk: int):
+        # deserialize request data
+        serializer = serializers.PublishArtworkSerializer(data=request.data)
+        serializer.is_valid()
+        is_public = serializer.data.get("publish")
+
+        # get artwork
+        artwork = models.Artwork.objects.get(pk=pk)
+
+        # set visibility
+        print()
+        artwork.is_public = is_public
+        artwork.save()
+
+        # serialize artwork
+        artwork_serializer = serializers.ArtworkSerializer(instance=artwork)
+        return Response(artwork_serializer.data)
 
 
 class PersonalArtworksView(generics.ListAPIView):
