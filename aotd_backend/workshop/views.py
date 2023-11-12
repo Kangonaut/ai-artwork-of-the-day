@@ -1,4 +1,5 @@
 import abc
+import json
 from typing import Type
 
 import django.db.models
@@ -175,3 +176,37 @@ class ArtStyleViewSet(
 ):
     queryset = models.ArtStyle.objects.all()
     serializer_class = serializers.ArtStyleSerializer
+
+
+class ArtStyleSettingsViewSet(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+
+    @action(detail=False, methods=["GET", "PUT"])
+    def me(self, request: Request) -> Response:
+        user: models.CustomUser = request.user
+        art_style_queryset = user.artstyle_set.all()
+
+        if request.method == "GET":
+            art_style_pks = [art_style.id for art_style in art_style_queryset]
+            return Response({
+                "art_styles": art_style_pks,
+            })
+
+        if request.method == "PUT":
+            # retrieve request body
+            if "art_styles" not in request.data:
+                return Response({"art_styles": "required field"}, status.HTTP_400_BAD_REQUEST)
+            art_style_pks: list[int] = request.data["art_styles"]
+
+            # delete previous art-styles
+            for art_style in art_style_queryset:
+                art_style.users.remove(user)
+
+            # insert new art-styles
+            print(art_style_pks)
+            for art_style_pk in art_style_pks:
+                models.ArtStyle.objects.get(pk=art_style_pk).users.add(user)
+
+            return Response({
+                "art_styles": art_style_pks,
+            })
