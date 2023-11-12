@@ -77,6 +77,7 @@ def generate_artwork(user_id: int):
         image=image_file,
         image_prompt=image_prompt,
         title=title,
+        is_public=False,
     )
     artwork.save()
     logger.info(f'successfully saved artwork')
