@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import AccountActionCard from "$lib/components/AccountActionCard.svelte";
   import SettingsItemCard from "$lib/components/SettingsItemCard.svelte";
+    import type { PageData } from "./$types";
 
   export let data: PageData;
 </script>
@@ -79,13 +80,13 @@
         btnContent="Logout"
         btnAction="/api/auth/logout"
       />
-      <hr />
+      <!-- <hr />
       <AccountActionCard
         title="Delete Account"
         description="Delete your account. All of your data, including your artworks will be deleted indefinately."
         btnContent="Delete Account"
         btnAction="/api/auth/logout"
-      />
+      /> -->
     </div>
   </div>
 </div>
