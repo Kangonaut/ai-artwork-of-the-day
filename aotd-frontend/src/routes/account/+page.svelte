@@ -18,17 +18,16 @@
       <span>!</span>
     </h1>
 
-    <!-- User Settings -->
-    <!-- <div class="grid grid-cols-1 gap-5 text-start w-full">
+    <div class="grid grid-cols-1 gap-5 text-start w-full">
       <h2 class="h2">General</h2>
       <SettingsItemCard
-        title="Account"
+        title="User"
         icon="solar:user-bold"
-        description="TODO: description"
-        url="/account/settings"
-        isEnabled={true}
+        description="At what time of day do you want to receive your artwork?"
+        url="/account/settings/user"
+        isEnabled={data.isUserEnabled}
       />
-    </div> -->
+    </div>
 
     <div class="grid grid-cols-1 gap-5 text-start w-full">
       <h2 class="h2">Data Sources</h2>

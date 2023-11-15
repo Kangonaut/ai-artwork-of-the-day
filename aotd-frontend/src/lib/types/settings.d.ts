@@ -26,3 +26,7 @@ interface ArtStyle {
 interface PushoverSettings {
     user_key: string;
 }
+
+interface UserSettings {
+    issue_time: string;
+}
