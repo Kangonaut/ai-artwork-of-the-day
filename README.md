@@ -5,11 +5,9 @@
 
 [![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Kangonaut/ai-artwork-of-the-day/blob/main/LICENSE)
 
-<img src="assets/videos/general-showcase.gif" alt="AI Artwork of the Day" width="512"/>
+<img src="assets/screenshots/artwork-hub.png" alt="AI Artwork of the Day" width="640"/>
 
 </div>
-
----
 
 ## Welcome!
 
