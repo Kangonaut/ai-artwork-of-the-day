@@ -5,6 +5,8 @@
 
 [![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Kangonaut/ai-artwork-of-the-day/blob/main/LICENSE)
 
+<img src="assets/videos/general-showcase.gif" alt="AI Artwork of the Day" width="512"/>
+
 </div>
 
 AI Artwork of the Day is fun little side project designed to provide a **daily dose of creativity and inspiration**, all thanks to the power of AI. The aim is to generate AI artwork that encapsulates the essence of your day. Each artwork accounts for the weather, your calendar entries, the current daytime, and is spiced up using a randomly selected art style.
