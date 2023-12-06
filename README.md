@@ -23,6 +23,151 @@ AI Artwork of the Day is fun little side project designed to provide a **daily d
 - **Artwork Hub:** share your generated artwork with others
 - **Push Notifications:** get your daily artwork straight to your mobile phone via [Pushover](https://pushover.net/)
 
+## Showcase
+
+### Baroque Sundown Delights
+
+#### Data
+
+```json
+{
+    "events":
+    [
+        "Ice Cream"
+    ],
+    "weather":
+    {
+        "general": "clear sky",
+        "is_dew": "False",
+        "is_rain": "False",
+        "is_snow": "False"
+    },
+    "daytime": "evening",
+    "art_style": "baroque"
+}
+```
+
+#### Image Prompt
+
+```
+A baroque style painting of people eating ice cream under a clear sky in the evening.
+```
+
+#### Image
+
+<div align="center">
+<img src="assets/artworks/baroque-sundown-delights.png" alt="Baroque Sundown Delights" width="400" style="border-radius: 20px"/>
+<p style="font-style: italic">Baroque Sundown Delights</p>
+</div>
+
+
+### Impressions of a Coding Cyclist
+
+#### Data
+
+```json
+{
+    "events":
+    [
+        "Cycling Tour",
+        "Programming"
+    ],
+    "weather":
+    {
+        "general": "overcast clouds",
+        "is_dew": "False",
+        "is_rain": "False",
+        "is_snow": "False"
+    },
+    "daytime": "afternoon",
+    "art_style": "impressionism"
+}
+```
+
+#### Image Prompt
+
+```
+An impressionist painting of a person cycling in the afternoon under overcast clouds, with a laptop showing code in the background.
+```
+
+#### Image
+
+<div align="center">
+<img src="assets/artworks/impressions-of-a-coding-cyclist.png" alt="Impressions of a Coding Cyclist" width="400" style="border-radius: 20px"/>
+<p style="font-style: italic">Impressions of a Coding Cyclist</p>
+</div>
+
+### Ascension Under the Midday Sky
+
+#### Data
+
+```json
+{
+    "events":
+    [
+        "Rock climbing"
+    ],
+    "weather":
+    {
+        "general": "scattered clouds",
+        "is_dew": "False",
+        "is_rain": "False",
+        "is_snow": "False"
+    },
+    "daytime": "midday",
+    "art_style": "acrylic"
+}
+```
+
+#### Image Prompt
+
+```
+An acrylic painting of a person rock climbing under a sky with scattered clouds at midday.
+```
+
+#### Image
+
+<div align="center">
+<img src="assets/artworks/ascension-under-the-midday-sky.png" alt="Ascension Under the Midday Sky" width="400" style="border-radius: 20px"/>
+<p style="font-style: italic">Ascension Under the Midday Sky</p>
+</div>
+
+### Vintage Afternoon: Pizza, Coffee, and Cake
+
+#### Data
+
+```json
+{
+    "events":
+    [
+        "Pizza",
+        "Coffee and Cake"
+    ],
+    "weather":
+    {
+        "general": "overcast clouds",
+        "is_dew": "False",
+        "is_rain": "False",
+        "is_snow": "False"
+    },
+    "daytime": "afternoon",
+    "art_style": "vintage"
+}
+```
+
+#### Image Prompt
+
+```
+A vintage style image of an afternoon event with pizza and coffee with cake under overcast clouds.
+```
+
+#### Image
+
+<div align="center">
+<img src="assets/artworks/vintage-afternoon-pizza-coffee-and-cake.png" alt="Vintage Afternoon: Pizza, Coffee, and Cake" width="400" style="border-radius: 20px"/>
+<p style="font-style: italic">Ascension Under the Midday Sky</p>
+</div>
+
 ## Technologies
 
 This project is built with the following tools and technologies:
