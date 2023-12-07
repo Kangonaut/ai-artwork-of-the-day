@@ -23,6 +23,10 @@ AI Artwork of the Day is fun little side project designed to provide a **daily d
 - **Artwork Hub:** share your generated artwork with others
 - **Push Notifications:** get your daily artwork straight to your mobile phone via [Pushover](https://pushover.net/)
 
+## Image Generation Process
+
+![Image Generation Process](assets/excalidraw/image-generation-process.png)
+
 ## Showcase
 
 ### Baroque Sundown Delights
