@@ -9,13 +9,24 @@
 
 </div>
 
-[toc]
+## Table of Contents
 
-## Welcome!
++ [Welcome!](#welcome)
++ [Key Features](#key-features)
++ [Image Generation Process](#image-generation-process)
++ [Showcase](#showcase)
++ [Technologies](#technologies)
++ [Setup and Installation](#setup-and-installation)
++ [Usage](#usage)
++ [Contributing](#contributing)
++ [License](#license)
++ [Contact](#contact)
+
+## Welcome! <a name="welcome"></a>
 
 AI Artwork of the Day is fun little side project designed to provide a **daily dose of creativity and inspiration**, all thanks to the power of AI. The aim is to generate AI artwork that encapsulates the essence of your day. Each artwork accounts for the weather, your calendar entries, the current daytime, and is spiced up using a randomly selected art style.
 
-## Key Features
+## Key Features <a name="key-features"></a>
 
 - **Daily Artwork:** receive daily AI-generated artwork that encapsulates your individual day
 - **Artwork Personalisation:** image generation takes into account the user's current weather, calendar entries, daytime, and a random art style
@@ -25,11 +36,11 @@ AI Artwork of the Day is fun little side project designed to provide a **daily d
 - **Artwork Hub:** share your generated artwork with others
 - **Push Notifications:** get your daily artwork straight to your mobile phone via [Pushover](https://pushover.net/)
 
-## Image Generation Process
+## Image Generation Process <a name="image-generation-process"></a>
 
 ![Image Generation Process](assets/excalidraw/image-generation-process.png)
 
-## Showcase
+## Showcase <a name="showcase"></a>
 
 ### Baroque Sundown Delights
 
@@ -174,7 +185,7 @@ A vintage style image of an afternoon event with pizza and coffee with cake unde
 <p style="font-style: italic">Ascension Under the Midday Sky</p>
 </div>
 
-## Technologies
+## Technologies <a name="technologies"></a>
 
 ![Application Architecture](assets/excalidraw/application-architecture.png)
 
@@ -190,23 +201,23 @@ This project is built with the following tools and technologies:
 - [GPT-4](https://openai.com/gpt-4): artwork prompt & title generation
 - [DALL-E 3](https://openai.com/dall-e-3): artwork image generation
 
-## Setup and Installation
+## Setup and Installation <a name="setup-and-installation"></a>
 
 TODO
 
-## Usage
+## Usage <a name="usage"></a>
 
 TODO
 
-## Contributing
+## Contributing <a name="contributing"></a>
 
 Feel free to fork the project, create a feature branch, and send me a pull request!
 
-## License
+## License <a name="license"></a>
 
 This project is licensed under the [MIT License](https://github.com/Kangonaut/ai-artwork-of-the-day/blob/main/LICENSE).
 
-## Contact
+## Contact <a name="contact"></a>
 
 You can reach out to me through [Reddit](https://www.reddit.com/user/Kangonaut/). I'd love to chat about this project or any other interesting topics!
 
