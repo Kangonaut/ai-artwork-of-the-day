@@ -60,7 +60,7 @@ A baroque style painting of people eating ice cream under a clear sky in the eve
 #### Image
 
 <div align="center">
-<img src="assets/artworks/baroque-sundown-delights.png" alt="Baroque Sundown Delights" width="400" style="border-radius: 20px"/>
+<img src="assets/artworks/baroque-sundown-delights.png" alt="Baroque Sundown Delights" width="400"/>
 <p style="font-style: italic">Baroque Sundown Delights</p>
 </div>
 
@@ -97,7 +97,7 @@ An impressionist painting of a person cycling in the afternoon under overcast cl
 #### Image
 
 <div align="center">
-<img src="assets/artworks/impressions-of-a-coding-cyclist.png" alt="Impressions of a Coding Cyclist" width="400" style="border-radius: 20px"/>
+<img src="assets/artworks/impressions-of-a-coding-cyclist.png" alt="Impressions of a Coding Cyclist" width="400"/>
 <p style="font-style: italic">Impressions of a Coding Cyclist</p>
 </div>
 
@@ -132,7 +132,7 @@ An acrylic painting of a person rock climbing under a sky with scattered clouds 
 #### Image
 
 <div align="center">
-<img src="assets/artworks/ascension-under-the-midday-sky.png" alt="Ascension Under the Midday Sky" width="400" style="border-radius: 20px"/>
+<img src="assets/artworks/ascension-under-the-midday-sky.png" alt="Ascension Under the Midday Sky" width="400"/>
 <p style="font-style: italic">Ascension Under the Midday Sky</p>
 </div>
 
@@ -168,7 +168,7 @@ A vintage style image of an afternoon event with pizza and coffee with cake unde
 #### Image
 
 <div align="center">
-<img src="assets/artworks/vintage-afternoon-pizza-coffee-and-cake.png" alt="Vintage Afternoon: Pizza, Coffee, and Cake" width="400" style="border-radius: 20px"/>
+<img src="assets/artworks/vintage-afternoon-pizza-coffee-and-cake.png" alt="Vintage Afternoon: Pizza, Coffee, and Cake" width="400"/>
 <p style="font-style: italic">Ascension Under the Midday Sky</p>
 </div>
 
