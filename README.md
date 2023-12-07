@@ -174,6 +174,8 @@ A vintage style image of an afternoon event with pizza and coffee with cake unde
 
 ## Technologies
 
+![Application Architecture](assets/excalidraw/application-architecture.png)
+
 This project is built with the following tools and technologies:
 
 - [Django](https://www.djangoproject.com/): backend framework
